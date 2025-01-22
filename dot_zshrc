@@ -1,0 +1,71 @@
+# Set up fzf key bindings and fuzzy completion
+source <(fzf --zsh)
+# Open in tmux popup if on tmux, otherwise use --height mode
+export FZF_DEFAULT_OPTS='--height 40% --tmux bottom,40% --layout reverse --border top'
+
+alias fzfp="fzf --preview 'bat --style=numbers --color=always --line-range :500 {}'"
+
+vterm_printf(){
+    if [ -n "$TMUX" ]; then
+        # Tell tmux to pass the escape sequences through
+        # (Source: http://permalink.gmane.org/gmane.comp.terminal-emulators.tmux.user/1324)
+        printf "\ePtmux;\e\e]%s\007\e\\" "$1"
+    elif [ "${TERM%%-*}" = "screen" ]; then
+        # GNU screen (screen, screen-256color, screen-256color-bce)
+        printf "\eP\e]%s\007\e\\" "$1"
+    else
+        printf "\e]%s\e\\" "$1"
+    fi
+}
+
+ if [[ "$INSIDE_EMACS" = 'vterm' ]]; then
+     alias clear='vterm_printf "51;Evterm-clear-scrollback";tput clear'
+ fi
+
+
+vterm_prompt_end() {
+    vterm_printf "51;A$(whoami)@$(hostname):$(pwd)";
+}
+
+# needed to make dir tracking work in Emacs/vterm.
+precmd_functions+=(vterm_prompt_end)
+
+export EDITOR=/Applications/Emacs.app//Contents/MacOS/bin/emacsclient
+
+export PRIVATE_DISK="$HOME/Personal.dmg.sparsebundle"
+export DENOTE_DISK="/Volumes/Personal/denote"
+
+# hunspell dictionary
+export DICPATH=$HOME/Library/Spelling/dict-en
+export DICTIONARY="en_GB,en_US"
+
+# ls (and other's?) will display output in colour
+export CLICOLOR=1
+
+
+## stuff to get git status into the prompt - from https://salferrarello.com/zsh-git-status-prompt/
+# Autoload zsh add-zsh-hook and vcs_info functions (-U autoload w/o substition, -z use zsh style)
+autoload -Uz add-zsh-hook vcs_info
+# Enable substitution in the prompt.
+setopt prompt_subst
+# Run vcs_info just before a prompt is displayed (precmd)
+add-zsh-hook precmd vcs_info
+# add ${vcs_info_msg_0} to the prompt
+# e.g. here we add the Git information in red  
+PROMPT='%1~ %F{red}${vcs_info_msg_0_}%f %# '
+
+# Enable checking for (un)staged changes, enabling use of %u and %c
+zstyle ':vcs_info:*' check-for-changes true
+# Set custom strings for an unstaged vcs repo changes (*) and staged changes (+)
+zstyle ':vcs_info:*' unstagedstr ' *'
+zstyle ':vcs_info:*' stagedstr ' +'
+# Set the format of the Git information for vcs_info
+zstyle ':vcs_info:git:*' formats       '(%b%u%c)'
+zstyle ':vcs_info:git:*' actionformats '(%b|%a%u%c)'
+## end stuff to get git status into the prompt
+
+# the magic that makes site funcions work. See
+# /opt/homebrew/share/zsh/site-functions for a list of site functions
+# installed by homebrew.
+autoload -Uz compinit
+compinit
