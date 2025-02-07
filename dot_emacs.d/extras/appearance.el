@@ -113,36 +113,24 @@
 
 (use-package  ibuffer
   :init
-  (setq ibuffer-saved-filter-groups
-	(quote (("default"
-		 ("dired" (mode . dired-mode))
-		 ("org" (name . "^.*org$"))
-		 ("search" (or
-			    (mode . occur-mode)
-			    (mode . grep-mode)
-			    (mode . ripgrep-search-mode)))
-		 ("web" (or
-			 (mode . web-mode)
-			 (mode . js2-mode)))
-		 ("shell" (or
-			   (mode . eshell-mode)
-			   (mode . term-mode)
-			   (mode . shell-mode)
-               (mode . vterm-mode)))
-		 ("programming" (or
-				 (mode . tac-mode)
-				 (mode . haskell-mode)
-				 (mode . scheme-mode)
-				 (mode . racket-mode)
-				 (mode . emacs-lisp)
-				 (mode . python-mode)
-				 (mode . c++-mode)))
-		 ("emacs" (or
-			   (name . "^\\*scratch\\*$")
-			   (name . "^\\*Messages\\*$")))
-		 )))
-	ibuffer-show-empty-filter-groups nil)
-  :bind (("C-x C-b" . ibuffer)))
+    :bind (("C-x C-b" . ibuffer)))
+
+(setq ibuffer-saved-filter-groups
+	  (quote (("default"
+		   ("dired" (mode . dired-mode))
+		   ("org" (mode . org-mode))
+		    ("magit" (name . "^magit"))
+		   ("planner" (or
+				(name . "^\\*Calendar\\*$")
+				(name . "^\\*Org Agenda\\*")))
+           ("Programming" (or
+                           (mode . python-ts-mode)
+                           (mode . c-ts-mode)
+                           (mode . c++-ts-mode)
+                           (mode . emacs-lisp-mode)))
+		   ("emacs" (or
+			     (name . "^\\*scratch\\*$")
+			     (name . "^\\*Messages\\*$")))))))
 
 (add-hook 'ibuffer-mode-hook
 	  (lambda ()

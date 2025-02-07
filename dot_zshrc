@@ -32,9 +32,6 @@ precmd_functions+=(vterm_prompt_end)
 
 export EDITOR=/Applications/Emacs.app//Contents/MacOS/bin/emacsclient
 
-export PRIVATE_DISK="$HOME/Personal.dmg.sparsebundle"
-export DENOTE_DISK="/Volumes/Personal/denote"
-
 # hunspell dictionary
 export DICPATH=$HOME/Library/Spelling/dict-en
 export DICTIONARY="en_GB,en_US"

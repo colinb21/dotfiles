@@ -89,19 +89,23 @@
 
 (load-file (expand-file-name "extras/spelling.el" user-emacs-directory))
 (load-file (expand-file-name "extras/load-consult.el" user-emacs-directory))
+(load-file (expand-file-name "extras/completion.el" user-emacs-directory))
 (load-file (expand-file-name "extras/denote.el" user-emacs-directory))
 (load-file (expand-file-name "extras/org.el" user-emacs-directory))
 (load-file (expand-file-name "extras/appearance.el" user-emacs-directory))
 (load-file (expand-file-name "extras/misc.el" user-emacs-directory))
 (load-file (expand-file-name "extras/programming.el" user-emacs-directory))
-(load-file (expand-file-name "extras/completion.el" user-emacs-directory))
+(load-file (expand-file-name "extras/python.el" user-emacs-directory))
+(load-file (expand-file-name "extras/magit.el" user-emacs-directory))
 (load-file (expand-file-name "extras/vterm.el" user-emacs-directory))
-(load-file (expand-file-name "extras/lsp.el" user-emacs-directory))
+;;(load-file (expand-file-name "extras/lsp.el" user-emacs-directory))
+(load-file (expand-file-name "extras/treesit.el" user-emacs-directory))
 (load-file (expand-file-name "extras/rust.el" user-emacs-directory))
 (load-file (expand-file-name "extras/nano.el" user-emacs-directory))
 (load-file (expand-file-name "extras/gptel.el" user-emacs-directory))
 (load-file (expand-file-name "extras/casual.el" user-emacs-directory))
 (load-file (expand-file-name "extras/embark.el" user-emacs-directory))
+(load-file (expand-file-name "extras/snippets.el" user-emacs-directory))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -109,3 +113,34 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
+(use-package python
+  :config
+  (require 'eglot)
+  (setq python-check-command "ruff")
+  (add-hook 'python-mode-hook #'flymake-mode)
+  (add-hook 'python-ts-mode-hook #'flymake-mode)
+  ;; (add-to-list 'eglot-server-programs '((python-mode python-ts-mode) "ruff-lsp"))
+  )
+
+(use-package eglot
+  :bind (("C-c e c" . eglot-reconnect)
+         ("C-c e d" . flymake-show-buffer-diagnostics)
+         ("C-c e f f" . eglot-format)
+         ("C-c e f b" . eglot-format-buffer)
+         ("C-c e l" . eglot)
+         ("C-c e r n" . eglot-rename)
+         ("C-c e s" . eglot-shutdown)))
+
+(straight-use-package 'flymake-ruff)
+(add-hook 'python-mode-hook #'flymake-ruff-load)
+
+
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(ns-command-modifier 'meta)
+ '(org-agenda-files (list (expand-file-name "org-todo/ToDo.org" user-emacs-directory)) nil nil "Customized with use-package org")
+ '(warning-suppress-types '((use-package) (comp))))
