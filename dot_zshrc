@@ -3,6 +3,9 @@ source <(fzf --zsh)
 # Open in tmux popup if on tmux, otherwise use --height mode
 export FZF_DEFAULT_OPTS='--height 40% --tmux bottom,40% --layout reverse --border top'
 
+# Do not record an event starting with a space.
+setopt HIST_IGNORE_SPACE
+
 alias fzfp="fzf --preview 'bat --style=numbers --color=always --line-range :500 {}'"
 
 vterm_printf(){
@@ -47,9 +50,18 @@ autoload -Uz add-zsh-hook vcs_info
 setopt prompt_subst
 # Run vcs_info just before a prompt is displayed (precmd)
 add-zsh-hook precmd vcs_info
+
+# below deprecated in favour of spaceship prompt.
 # add ${vcs_info_msg_0} to the prompt
 # e.g. here we add the Git information in red  
-PROMPT='%1~ %F{red}${vcs_info_msg_0_}%f %# '
+#PROMPT='%1~ %F{red}${vcs_info_msg_0_}%f %# '
+
+source "/opt/homebrew/opt/spaceship/spaceship.zsh"
+
+# Now you can list installed prompts with prompt -p. This will give you# the theme name and an example of what it looks like rendered.
+#
+# Select the theme you want with prompt $THEME.
+autoload -Uz promptinit; promptinit
 
 # Enable checking for (un)staged changes, enabling use of %u and %c
 zstyle ':vcs_info:*' check-for-changes true
@@ -69,3 +81,25 @@ compinit
 
 eval "$(uv --generate-shell-completion zsh)"
 eval "$(uvx --generate-shell-completion zsh)"
+
+#interactive git diff - this is the shit!
+function fshow() {
+  git log --graph --color=always \
+      --format="%C(auto)%h%d %s %C(black)%C(bold)%cr" "$@" \
+  | fzf --ansi --preview "echo {} \
+    | grep -o '[a-f0-9]\{7\}' \
+    | head -1 \
+    | xargs -I % sh -c 'git show --color=always %'" \
+        --bind "enter:execute:
+            (grep -o '[a-f0-9]\{7\}' \
+                | head -1 \
+                | xargs -I % sh -c 'git show --color=always % \
+                | less -R') << 'FZF-EOF'
+            {}
+FZF-EOF"
+}
+
+
+source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+
+source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
