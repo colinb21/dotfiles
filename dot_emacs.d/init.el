@@ -41,15 +41,6 @@
 (setq backup-directory-alist
       `(("." . ,(concat user-emacs-directory "backup-files"))))
 
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(ns-command-modifier 'meta)
- '(org-agenda-files (expand-file-name "org-todo/ToDo.org" user-emacs-directory) nil nil "Customized with use-package org")
- '(warning-suppress-types '((use-package) (comp))))
-
 ;; update packages every 4 days
 (use-package auto-package-update :ensure t
   :config (auto-package-update-maybe))
@@ -60,8 +51,19 @@
 (use-package exec-path-from-shell
   ;;  :if (memq window-system '(mac ns x))
   :config
-  (setq exec-path-from-shell-variables '("PATH" "GOPATH" "PRIVATE_DISK" "DENOTE_DIR"))
+  (setq exec-path-from-shell-variables '("PATH" "GOPATH" "PRIVATE_DISK" "DENOTE_DIR" "ORG_DIR"))
   (exec-path-from-shell-initialize))
+
+
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(ns-command-modifier 'meta)
+ '(org-agenda-files (list (expand-file-name "ToDo.org" (getenv "ORG_DIR"))) nil nil "Customized with use-package org")
+ '(warning-suppress-types '((use-package) (comp))))
+
 
 ;; Blackout is a package which allows you to hide or customize the
 ;; display of major and minor modes in the mode line.
@@ -135,12 +137,3 @@
 (straight-use-package 'flymake-ruff)
 (add-hook 'python-mode-hook #'flymake-ruff-load)
 
-
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(ns-command-modifier 'meta)
- '(org-agenda-files (list (expand-file-name "org-todo/ToDo.org" user-emacs-directory)) nil nil "Customized with use-package org")
- '(warning-suppress-types '((use-package) (comp))))

@@ -19,7 +19,7 @@
 	       (string= lang "haskell")
                (string= lang "d2"))))
     (setq org-confirm-babel-evaluate 'my-org-confirm-babel-evaluate)
-    (setopt org-directory "~/Documents/Notes/")
+    (setopt org-directory (getenv "ORG_DIR"))
 
 
     ;; variable-pitch as opposed to fixed width characters visual line
@@ -40,26 +40,29 @@
      (python . t) (shell . t) (haskell . t) (dot . t) (octave . t)))
   (org-capture-templates
    '(
+     ("t" "Todo" entry (file+headline "/Volumes/Personal/org/ToDo.org" "Tasks")
+         "* TODO %?\n  %i\n  %a")
      ;; key "t" description "todo" type "entry - an org mode entry
      ;; with a headline, child of the target"
-     ("t" "todo" entry
-      ;; target "file+headline <PATH> "Tasks" - in the file, under a heading "Tasks"
-      (file+headline "~/.emacs.d/org-todo/ToDo.org" "Tasks")
-      ;; template "* TODO [#A] " %? -- after completing template, put point here
-      "* TODO [#A] %?")
-     ("j" "journal" entry
-      (file+olp+datetree "~/.emacs.d/org-todo/Journal.org")
-      "* %?" :empty-lines 1)
-     ("f" "Fleeting note" item
-      (file+headline org-default-notes-file "Notes")
-      "- %?")
-     ("p" "Permanent note" plain
-      (file denote-last-path)
-      #'denote-org-capture
-      :no-save t
-      :immediate-finish nil
-      :kill-buffer t
-      :jump-to-captured t)))
+     ;; ("t" "todo" entry
+     ;;  ;; target "file+headline <PATH> "Tasks" - in the file, under a heading "Tasks"
+     ;;  (file+headline "~/.emacs.d/org-todo/ToDo.org" "Tasks")
+     ;;  ;; template "* TODO [#A] " %? -- after completing template, put point here
+     ;;  "* TODO [#A] %?")
+     ;; ("j" "journal" entry
+     ;;  (file+olp+datetree "~/.emacs.d/org-todo/Journal.org")
+     ;;  "* %?" :empty-lines 1)
+     ;; ("f" "Fleeting note" item
+     ;;  (file+headline org-default-notes-file "Notes")
+     ;;  "- %?")
+      ;;     ("p" "Permanent note" plain
+      ;; (file denote-last-path)
+      ;; #'denote-org-capture
+      ;; :no-save t
+      ;; :immediate-finish nil
+      ;; :kill-buffer t
+      ;; :jump-to-captured t)
+))
   (org-default-priority 65)
   (org-ditaa-jar-path "~/.emacs.d/vendor/ditaa0_9.jar")
   (org-hide-emphasis-markers t)
