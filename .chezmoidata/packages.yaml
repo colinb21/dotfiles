@@ -4,34 +4,35 @@ packages:
     - 'bat'
     - 'borgbackup'
     - 'bottom'
-    - 'brogue'
-    - 'broot'
+    - 'brogueCE'                    # fork of Brogue - Roguelike https://github.com/tmewett/BrogueCE
+    - 'broot'                       # directory navigation https://github.com/Canop/broot
     - 'btop'
-    - 'chezmoi'
+    - 'chezmoi'                     # manage dotfiles across multiple machines https://www.chezmoi.io
     - 'cmake'
     - 'curl'
-    - 'd2'
-    - 'duc'
-    - 'duf'
-    - 'dust'
-    - 'enchant'
-    - 'eza'
-    - 'fd'
+    - 'd2'                          # diagrams from text https://d2lang.com
+    - 'duc'                         # inspect disk usage https://github.com/zevv/duc
+    - 'duf'                         # df alternative https://github.com/muesli/duf
+    - 'dust'                        # du in rust https://github.com/bootandy/dust
+    - 'enchant'                     # spellchecking library https://github.com/rrthomas/enchant
+    - 'eza'                         # alternative to 'ls' https://github.com/eza-community/eza
+    - 'fd'                          # alternative to 'find' https://github.com/sharkdp/fd
     - 'ffmpeg'
     - 'fzf'
-    - 'glow'
-    - 'hunspell'
-    - 'hyperfine'
+    - 'glow'                        # render markdown with pizzaz! https://github.com/charmbracelet/glow
+    - 'hunspell'                    # spellchecking library https://github.com/hunspell/hunspell
+    - 'hyperfine'                   # CLI benchmarking https://github.com/sharkdp/hyperfine
     - 'jq'
     - 'libvterm'
     - 'mosh'
     - 'pkgconf'
     - 'procs'
     - 'ripgrep'
-    - 'sdcv'
-    - 'spaceship'
-    - 'tldr'
+    - 'sdcv'                        # console version of Star Dictionary https://dushistov.github.io/sdcv/
+    - 'spaceship'                   # ZSH Prompt https://github.com/spaceship-prompt/spaceship-prompt
+    - 'tldr'                        # Collaborative Cheatsheet for Console Commands https://github.com/tldr-pages/tldr
     - 'tmux'
+    - 'tpm'                         # TMUX Plugin Manager https://github.com/tmux-plugins/tpm/blob/master/README.md
     - 'wakeonlan'
     - 'watchexec'
     - 'wget'
@@ -40,7 +41,6 @@ packages:
     - 'zsh-autosuggestions'
     - 'zsh-syntax-highlighting'
     casks:
-    - 'hiddenbar'
     - 'keycastr'
     - 'shortcat'
     - 'spatterlight'
