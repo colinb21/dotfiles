@@ -103,3 +103,5 @@ FZF-EOF"
 source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+source /Users/cbenson/Library/Application\ Support/org.dystroy.broot/launcher/bash/br
