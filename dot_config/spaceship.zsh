@@ -1,0 +1,3 @@
+# Display time
+SPACESHIP_TIME_SHOW=true
+SPACESHIP_UV_SHOW=true
