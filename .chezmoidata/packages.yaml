@@ -4,7 +4,6 @@ packages:
     - 'bat'
     - 'borgbackup'
     - 'bottom'
-    - 'brogueCE'                    # fork of Brogue - Roguelike https://github.com/tmewett/BrogueCE
     - 'broot'                       # directory navigation https://github.com/Canop/broot
     - 'btop'
     - 'chezmoi'                     # manage dotfiles across multiple machines https://www.chezmoi.io
