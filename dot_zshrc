@@ -99,6 +99,11 @@ function fshow() {
 FZF-EOF"
 }
 
+# first:
+# uv python install 3.14
+# Installed Python 3.14.0a4 in 1.87s
+# then
+alias python3.14='uv run --python=3.14 python3'
 
 source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
