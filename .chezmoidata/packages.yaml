@@ -4,7 +4,6 @@ packages:
     - 'bat'
     - 'borgbackup'
     - 'bottom'
-    - 'broot'                       # directory navigation https://github.com/Canop/broot
     - 'btop'
     - 'chezmoi'                     # manage dotfiles across multiple machines https://www.chezmoi.io
     - 'cmake'
