@@ -82,6 +82,10 @@ compinit
 eval "$(uv --generate-shell-completion zsh)"
 eval "$(uvx --generate-shell-completion zsh)"
 
+# Completing process IDs with menu selection:
+zstyle ':completion:*:*:kill:*' menu yes select
+zstyle ':completion:*:kill:*' force-list always
+
 #interactive git diff - this is the shit!
 function fshow() {
   git log --graph --color=always \
