@@ -1,4 +1,4 @@
-["cattpuchin tmux extension"]
+[".config/tmux/plugins/catppuccin/tmux"]
     type = "git-repo"
     url = "https://github.com/catppuccin/tmux.git"
     refreshPeriod = "168h"
