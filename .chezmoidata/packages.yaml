@@ -23,6 +23,7 @@ packages:
     - 'jq'
     - 'libvterm'
     - 'mosh'
+    - 'navi'                        # An interactive cheatsheet tool for the command-line.
     - 'pkgconf'
     - 'procs'
     - 'ripgrep'
