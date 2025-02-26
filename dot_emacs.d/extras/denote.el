@@ -29,7 +29,7 @@
 ;; from https://protesilaos.com/codelog/2024-09-20-emacs-use-denote-for-meetings-events/
 ;;
 
-(defvar my-denote-colleagues '("adrianTut" "bogdanPetrica" "conorMcmenamin" "crispinDentYoung" "csabaDeak" "davidDombai" "graemeRennie" "jonathanRosca" "krzysztofFoltman" "lucasFrere" "nicolasRobert" "nikosKokkalis" "palomaPedregal" "PhilWhineray" "ricardoRuedas" "scarlettGourley" "simonWass" "tejasDusane" "zacAyoun" "davidSutton" "kartikChandran" "gautamKachroo" "satishKumarSelvaraj" "sriramChidambaram" "krzysztofKosciuszkiewicz" "sebastianGhelase" "ganesanRajagopal" "milindKulkarni")
+(defvar my-denote-colleagues (split-string (getenv "MY_DENOTE_COLLEAGUES"))
   "List of names I collaborate with.
 There is at least one file in the variable `denote-directory' that has
 the name of this person.")

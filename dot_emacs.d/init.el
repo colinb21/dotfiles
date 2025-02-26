@@ -51,7 +51,7 @@
 (use-package exec-path-from-shell
   ;;  :if (memq window-system '(mac ns x))
   :config
-  (setq exec-path-from-shell-variables '("PATH" "GOPATH" "PRIVATE_DISK" "DENOTE_DIR" "ORG_DIR"))
+  (setq exec-path-from-shell-variables '("PATH" "GOPATH" "PRIVATE_DISK" "DENOTE_DIR" "ORG_DIR" "MY_DENOTE_COLLEAGUES"))
   (exec-path-from-shell-initialize))
 
 
@@ -64,6 +64,11 @@
  '(org-agenda-files (list (expand-file-name "ToDo.org" (getenv "ORG_DIR"))) nil nil "Customized with use-package org")
  '(warning-suppress-types '((use-package) (comp))))
 
+;; nicer chezmoi diff etc
+(use-package chezmoi)
+(require 'chezmoi-ediff)
+(global-set-key (kbd "C-c C f")  #'chezmoi-find)
+(global-set-key (kbd "C-c C s")  #'chezmoi-write)
 
 ;; Blackout is a package which allows you to hide or customize the
 ;; display of major and minor modes in the mode line.

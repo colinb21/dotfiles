@@ -4,3 +4,8 @@ export PATH="$HOME/.local/bin:$PATH"
 export PRIVATE_DISK="$HOME/Personal.dmg.sparsebundle"
 export DENOTE_DIR="/Volumes/Personal/denotes"
 export ORG_DIR="/Volumes/Personal/org"
+
+if [ -f $HOME/.do_not_share.sh ]; then
+    source $HOME/.do_not_share.sh
+fi
+
