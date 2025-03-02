@@ -66,7 +66,6 @@
 
 ;; nicer chezmoi diff etc
 (use-package chezmoi)
-(require 'chezmoi-ediff)
 (global-set-key (kbd "C-c C f")  #'chezmoi-find)
 (global-set-key (kbd "C-c C s")  #'chezmoi-write)
 
