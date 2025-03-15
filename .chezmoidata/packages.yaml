@@ -2,7 +2,6 @@ packages:
   darwin:
     brews:
     - 'bat'
-    - 'borgbackup'
     - 'bottom'
     - 'btop'
     - 'chezmoi'                     # manage dotfiles across multiple machines https://www.chezmoi.io
