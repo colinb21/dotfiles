@@ -1,7 +1,6 @@
 ;; Denote
 (use-package  denote
   :init
-;;  (require 'denote-org-extras)
   (denote-rename-buffer-mode t)
   :custom
   (denote-directory (getenv "DENOTE_DIR"))
