@@ -21,7 +21,6 @@
    ("C-c n k" . denote-keywords-add)
    ("C-c n K" . denote-keywords-remove)))
 
-(require 'denote-org-extras)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;           denote meeting notes
