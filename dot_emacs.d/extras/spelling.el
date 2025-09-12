@@ -6,7 +6,6 @@
                 (alist-get t jinx-exclude-regexps))
   :custom
   (jinx-camel-modes '(prog-mode))
-  (jinx-languages 'en')
   (jinx-delay 0.01))
 
 (setopt dictionary-use-single-buffer t)
