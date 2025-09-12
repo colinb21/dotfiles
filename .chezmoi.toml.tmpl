@@ -1,0 +1,19 @@
+# -*- Mode: toml-ts; indent-tabs-mode: nil; eval: (chezmoi-update-template-mode); -*-
+
+# much stolen from
+# https://marcusb.org/posts/2025/01/frictionless-dotfile-management-with-chezmoi/
+
+pager = "less -R"
+
+# Set edit.apply = true to auto-apply changes after running chezmoi
+# edit.
+[edit]
+    apply = true
+
+
+# Set a hook so that chezmoi init runs after chezmoi
+# edit-config-template is invoked. This auto-applies changes to the
+# config template prior to applying any config file changes.
+[hooks.edit-config-template.post]
+    command = "chezmoi"
+    args = ["init"]

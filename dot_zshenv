@@ -1,5 +1,5 @@
 # uv
-export PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/.local/bin:/Users/cbenson/.lmstudio/bin:$PATH"
 
 export PRIVATE_DISK="$HOME/Personal.dmg.sparsebundle"
 export DENOTE_DIR="/Volumes/Personal/denotes"
@@ -9,3 +9,10 @@ if [ -f $HOME/.do_not_share.sh ]; then
     source $HOME/.do_not_share.sh
 fi
 
+export OLLAMA_API_BASE=http://127.0.0.1:11434
+
+# Must set a value here even if its a dummy value
+export LM_STUDIO_API_KEY=dummy-api-key # Mac/Linux
+
+# LM Studio default server URL is http://localhost:1234/v1
+export LM_STUDIO_API_BASE=http://localhost:1234/v1 # Mac/Linux
