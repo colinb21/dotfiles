@@ -75,7 +75,7 @@
 (global-set-key (kbd "M-a") 'sentence-nav-backward)
 
 (use-package avy
-  :bind (("M-j" . avy-goto-char-timee)))
+  :bind (("M-j" . avy-goto-char-timer)))
 
 ;; Helpful is an alternative to the built-in Emacs help that provides
 ;; much more contextual information.
