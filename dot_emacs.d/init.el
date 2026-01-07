@@ -64,11 +64,6 @@
  '(org-agenda-files (list (expand-file-name "ToDo.org" (getenv "ORG_DIR"))) nil nil "Customized with use-package org")
  '(warning-suppress-types '((use-package) (comp))))
 
-;; nicer chezmoi diff etc
-(use-package chezmoi)
-(global-set-key (kbd "C-c C f")  #'chezmoi-find)
-(global-set-key (kbd "C-c C s")  #'chezmoi-write)
-
 ;; Blackout is a package which allows you to hide or customize the
 ;; display of major and minor modes in the mode line.
 (use-package blackout)
@@ -112,6 +107,7 @@
 (load-file (expand-file-name "extras/casual.el" user-emacs-directory))
 (load-file (expand-file-name "extras/embark.el" user-emacs-directory))
 (load-file (expand-file-name "extras/snippets.el" user-emacs-directory))
+(load-file (expand-file-name "extras/chezmoi.el" user-emacs-directory))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
