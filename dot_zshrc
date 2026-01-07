@@ -1,3 +1,8 @@
+# Keep this at the top. Un-comment it, and the call at the end of the
+# file to turn on startup profiling.
+#
+# zmodload zsh/zprof
+
 # Set up fzf key bindings and fuzzy completion
 source <(fzf --zsh)
 # Open in tmux popup if on tmux, otherwise use --height mode
@@ -56,6 +61,19 @@ add-zsh-hook precmd vcs_info
 # e.g. here we add the Git information in red  
 #PROMPT='%1~ %F{red}${vcs_info_msg_0_}%f %# '
 
+SPACESHIP_PROMPT_ASYNC=true
+SPACESHIP_PROMPT_ADD_NEWLINE=true
+SPACESHIP_CHAR_SYMBOL="⚡"
+
+# Only load what you actually use
+SPACESHIP_PROMPT_ORDER=(
+    time
+    user
+    dir
+    git
+    line_sep
+    char
+)
 source "/opt/homebrew/opt/spaceship/spaceship.zsh"
 
 # Now you can list installed prompts with prompt -p. This will give you# the theme name and an example of what it looks like rendered.
@@ -113,3 +131,13 @@ source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+# [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+# line above commented out because it's brutally slow to start. Instead do it lazily. Like this...
+alias nvm="unalias nvm; [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"; nvm $@"
+
+# leave this last. Un-comment it, and the initialization at the top of
+# the file to turn on startup profiling.
+#
+# zprof
