@@ -137,13 +137,6 @@ export NVM_DIR="$HOME/.nvm"
 # line above commented out because it's brutally slow to start. Instead do it lazily. Like this...
 alias nvm="unalias nvm; [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"; nvm $@"
 
-# ARISTA-specific AI setup.
-export GOOGLE_CLOUD_PROJECT="AQ.Ab8RN6JIuOWnkOYFnG04V08oPrFv7zNuO3FLkD8m7CzU_hdxeA"
-export ANTHROPIC_VERTEX_PROJECT_ID=${GOOGLE_CLOUD_PROJECT}
-export CLAUDE_CODE_USE_VERTEX=1
-export CLOUD_ML_REGION=global
-
-
 # leave this last. Un-comment it, and the initialization at the top of
 # the file to turn on startup profiling.
 #
