@@ -113,6 +113,9 @@ source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
+#https://github.com/webcoyote/sandvault?tab=readme-ov-file
+alias sv="/path/to/where/you/cloned/sandvault/sv"
+
 # Added by LM Studio CLI (lms)
 export PATH="$PATH:/Users/cbenson/.lmstudio/bin"
 # End of LM Studio CLI section
