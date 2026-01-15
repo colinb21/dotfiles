@@ -41,7 +41,19 @@
   (org-capture-templates
    '(
      ("t" "Todo" entry (file+headline "/Volumes/Personal/org/ToDo.org" "Tasks")
-         "* TODO %?\n  %i\n  %a")
+      "* TODO %?\n  %i\n  %a")
+     ("note"
+      "Note (Org Protocol)"
+      entry
+      (file "~/org/notes.org")
+      (function (lambda ()
+                  (string-join
+                   '("* %U"
+                     "%i")
+                   "\n")))
+      :prepend t
+      :immediate-finish t
+      :empty-lines-after 1)
      ;; key "t" description "todo" type "entry - an org mode entry
      ;; with a headline, child of the target"
      ;; ("t" "todo" entry

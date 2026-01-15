@@ -1,12 +1,7 @@
 ;; nicer chezmoi diff etc.
-;; From
-;;
-;; https://marcusb.org/posts/2025/01/frictionless-dotfile-management-with-chezmoi/
+;; From https://marcusb.org/posts/2025/01/frictionless-dotfile-management-with-chezmoi/
 
 (use-package chezmoi)
-;; (global-set-key (kbd "C-c C f")  #'chezmoi-find)
-;; (global-set-key (kbd "C-c C s")  #'chezmoi-write)
-
 
 (defun chezmoi-wrap-find-file (file)
   "If a file is managed via chezmoi, load the source template, otherwise use find-file"

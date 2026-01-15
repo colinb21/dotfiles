@@ -131,13 +131,6 @@ source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-# [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-# line above commented out because it's brutally slow to start. Instead do it lazily. Like this...
-alias nvm="unalias nvm; [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"; nvm $@"
-
-# leave this last. Un-comment it, and the initialization at the top of
-# the file to turn on startup profiling.
-#
-# zprof
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/Users/cbenson/.lmstudio/bin"
+# End of LM Studio CLI section

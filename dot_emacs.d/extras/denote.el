@@ -1,7 +1,6 @@
 ;; Denote
 (use-package  denote
   :init
-;;  (require 'denote-org-extras)
   (denote-rename-buffer-mode t)
   :custom
   (denote-directory (getenv "DENOTE_DIR"))
@@ -21,7 +20,6 @@
    ("C-c n k" . denote-keywords-add)
    ("C-c n K" . denote-keywords-remove)))
 
-(require 'denote-org-extras)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;           denote meeting notes
