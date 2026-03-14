@@ -9,7 +9,7 @@ function bindKey(key, fn)
   hs.hotkey.bind(cac, key, fn)
 end
 
-bindkey('l', function() hs.grid.show())
+bindkey('l', function() hs.grid.show() end)
 
 --bindKey('h', function() spoon.WinWin:stepResize('left') end)
 --bindKey(';', function() spoon.WinWin:stepResize('right') end)
