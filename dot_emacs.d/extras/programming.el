@@ -25,3 +25,6 @@
   (progn
     (setq flycheck-display-errors-function nil)
     (add-hook 'after-init-hook 'global-flycheck-mode)))
+
+
+(use-package go-mode)
