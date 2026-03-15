@@ -79,6 +79,9 @@
 ;; accept y or n instead of demanding yes or no every time
 (setopt use-short-answers t)
 
+;; show a count of search results in the mode line.
+(setopt isearch-lazy-count t)
+
 ;; winner-mode lets you move back and forth through your window
 ;; configuration history with C-c <LEFT> and C-c <right>.
 (winner-mode 1)
