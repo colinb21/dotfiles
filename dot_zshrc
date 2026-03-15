@@ -143,9 +143,9 @@ export PATH="$PATH:/Users/cbenson/.lmstudio/bin"
 
 # GOLANG setup
 
-export PATH=$PATH:/usr/local/go/bin
 export GOPATH=$HOME/go/bin
 export GOROOT=/usr/local/go
+export PATH=$PATH:/usr/local/go/bin:$GOPATH
 
 # leave this last. Un-comment it, and the initialization at the top of
 # the file to turn on startup profiling.
