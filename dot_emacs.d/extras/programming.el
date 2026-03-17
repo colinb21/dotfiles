@@ -32,12 +32,12 @@
                      (setq tab-width 4)
                      (setq indent-tabs-mode t)))) ; Go uses real tabs
 
-(use-package eglot
-  :hook (go-mode . eglot-ensure)
-  :config
-  (setq-default eglot-workspace-configuration
-    '((:gopls . (:usePlaceholders t
-                                  :gofumpt t)))))
+;; (use-package eglot
+;;   :hook (go-mode . eglot-ensure)
+;;   :config
+;;   (setq-default eglot-workspace-configuration
+;;     '((:gopls . (:usePlaceholders t
+;;                                   :gofumpt t)))))
 
 (add-hook 'before-save-hook #'gofmt-before-save)
 
