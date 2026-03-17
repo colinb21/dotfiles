@@ -96,7 +96,7 @@
 (use-package nerd-icons)
 
 (load-file (expand-file-name "extras/spelling.el" user-emacs-directory))
-(load-file (expand-file-name "extras/load-consult.el" user-emacs-directory))
+;;(load-file (expand-file-name "extras/load-consult.el" user-emacs-directory))
 (load-file (expand-file-name "extras/completion.el" user-emacs-directory))
 (load-file (expand-file-name "extras/denote.el" user-emacs-directory))
 (load-file (expand-file-name "extras/org.el" user-emacs-directory))
