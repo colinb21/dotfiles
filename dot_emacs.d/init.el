@@ -19,6 +19,9 @@
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
 
+
+(setq package-enable-at-startup nil)
+
 ;; Install use-package
 (straight-use-package 'use-package)
 
