@@ -96,7 +96,7 @@
 (use-package nerd-icons)
 
 (load-file (expand-file-name "extras/spelling.el" user-emacs-directory))
-;;(load-file (expand-file-name "extras/load-consult.el" user-emacs-directory))
+(load-file (expand-file-name "extras/load-consult.el" user-emacs-directory))
 (load-file (expand-file-name "extras/completion.el" user-emacs-directory))
 (load-file (expand-file-name "extras/denote.el" user-emacs-directory))
 (load-file (expand-file-name "extras/org.el" user-emacs-directory))
@@ -123,15 +123,6 @@
  ;; If there is more than one, they won't work right.
  )
 
-(use-package python
-  :config
-  (require 'eglot)
-  (setq python-check-command "ruff")
-  (add-hook 'python-mode-hook #'flymake-mode)
-  (add-hook 'python-ts-mode-hook #'flymake-mode)
-  ;; (add-to-list 'eglot-server-programs '((python-mode python-ts-mode) "ruff-lsp"))
-  )
-
 (use-package eglot
   :bind (("C-c e c" . eglot-reconnect)
          ("C-c e d" . flymake-show-buffer-diagnostics)
@@ -140,6 +131,14 @@
          ("C-c e l" . eglot)
          ("C-c e r n" . eglot-rename)
          ("C-c e s" . eglot-shutdown)))
+
+(use-package python
+  :config
+  (setq python-check-command "ruff")
+  (add-hook 'python-mode-hook #'flymake-mode)
+  (add-hook 'python-ts-mode-hook #'flymake-mode)
+  ;; (add-to-list 'eglot-server-programs '((python-mode python-ts-mode) "ruff-lsp"))
+  )
 
 (straight-use-package 'flymake-ruff)
 (add-hook 'python-mode-hook #'flymake-ruff-load)
