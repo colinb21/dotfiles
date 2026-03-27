@@ -83,6 +83,8 @@
 
 ;; show a count of search results in the mode line.
 (setopt isearch-lazy-count t)
+(setopt lazy-count-prefix-format nil)
+(setopt lazy-count-suffix-format " [%s/%s]")
 
 ;; winner-mode lets you move back and forth through your window
 ;; configuration history with C-c <LEFT> and C-c <right>.
@@ -144,8 +146,3 @@
 
 ;; (straight-use-package 'flymake-ruff)
 ;; (add-hook 'python-mode-hook #'flymake-ruff-load)
-
-;;customizing isearch
-(setopt isearch-lazy-count t)
-(setopt lazy-count-prefix-format nil)
-(setopt lazy-count-suffix-format " [%s/%s]")
