@@ -5,6 +5,8 @@
 ;; Start a timer.  Check when finished init.
 (defconst emacs-start-time (current-time))
 
+(setq package-enable-at-startup nil)
+
 ;; Install straight.el
 (defvar bootstrap-version)
 (let ((bootstrap-file
@@ -18,9 +20,6 @@
       (goto-char (point-max))
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
-
-
-(setq package-enable-at-startup nil)
 
 ;; Install use-package
 (straight-use-package 'use-package)
@@ -146,3 +145,7 @@
 ;; (straight-use-package 'flymake-ruff)
 ;; (add-hook 'python-mode-hook #'flymake-ruff-load)
 
+;;customizing isearch
+(setopt isearch-lazy-count t)
+(setopt lazy-count-prefix-format nil)
+(setopt lazy-count-suffix-format " [%s/%s]")
