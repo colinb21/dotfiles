@@ -131,16 +131,15 @@ Does nothing if `visual-line-mode' is on."
 ;; takes you to the set of all such capture buffers.
 (define-key global-map (kbd "C-c c") 'org-capture)
 
-(use-package  org-superstar
-  :straight t
-  :config
-  (progn
-    (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1)))))
+(use-package org-superstar
+    :config
+    (setq org-superstar-leading-bullet " ")
+    (setq org-superstar-headline-bullets-list '("①" "②" "③" "④" "⑤" "⑥" "⑦" "⑧" "⑨" "⑩"))
 
-(setq org-superstar-item-bullet-alist
-        '((?* . ?•)
-          (?+ . ?➤)
-          (?- . ?•)))
+    (setq org-superstar-special-todo-items t) ;; Makes TODO header bullets into boxes
+    (setq org-superstar-todo-bullet-alist '(("TODO"  . 9744)
+                                            ("DONE"  . 9745)))
+    :hook (org-mode . org-superstar-mode))
 
 (use-package  org-present :straight t)
 
