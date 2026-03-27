@@ -146,3 +146,8 @@
 
 ;; (straight-use-package 'flymake-ruff)
 ;; (add-hook 'python-mode-hook #'flymake-ruff-load)
+
+(defun lookup-word-at-point ()
+  "Lookup word at point in OSX Dictionary"
+  (interactive)
+  (call-process-shell-command (format "open dict:///%s/" (word-at-point))))
