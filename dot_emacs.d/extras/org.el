@@ -174,10 +174,10 @@ Does nothing if `visual-line-mode' is on."
   (if (equal "capture" (frame-parameter nil 'name))
       (delete-frame)))
 
-;; (use-package org-bullets
-;;   :after org
-;;   :ensure t
-;;   :hook (org-mode . org-bullets-mode))
+(use-package org-bullets
+  :after org
+  :ensure t
+  :hook (org-mode . org-bullets-mode))
 
 (use-package org-modern
   :after org
