@@ -151,3 +151,37 @@
   "Lookup word at point in OSX Dictionary"
   (interactive)
   (call-process-shell-command (format "open dict:///%s/" (word-at-point))))
+
+;; https://emacsredux.com/blog/2026/04/07/stealing-from-the-best-emacs-configs/
+;;If you don’t edit right-to-left languages (Arabic, Hebrew, etc.),
+;;Emacs is doing a bunch of work on every redisplay cycle for
+;;nothing. These settings tell Emacs to assume left-to-right text
+;;everywhere and skip the bidirectional parenthesis algorithm:
+(setq-default bidi-display-reordering 'left-to-right
+              bidi-paragraph-direction 'left-to-right)
+(setq bidi-inhibit-bpa t)
+
+;; Emacs normally fontifies (syntax-highlights) text even while you’re
+;; actively typing. This can cause micro-stutters, especially in
+;; tree-sitter modes or large buffers. One setting fixes it:
+(setq redisplay-skip-fontification-on-input t)
+
+;; The default read-process-output-max is 64KB, which is still quite
+;; conservative. Modern LSP servers like rust-analyzer or clangd
+;; routinely send multi-megabyte responses. Bumping this reduces the
+;; number of read calls Emacs has to make:
+(setq read-process-output-max (* 4 1024 1024)) ; 4MB
+
+;;This setting makes Emacs save the existing clipboard content into
+;;the kill ring before overwriting it:
+(setq save-interprogram-paste-before-kill t)
+;;Now C-y gets the kill, and M-y gets you back to the URL. Such a
+;;small thing, but it eliminates a genuinely annoying problem.
+
+;; If you create a file that starts with #! (a shebang line), it
+;; should be executable. But you always forget to chmod +x it, run the
+;; script, get “Permission denied”, curse, go back, chmod, try
+;; again. This hook does it automatically:
+(add-hook 'after-save-hook
+          #'executable-make-buffer-file-executable-if-script-p)
+
