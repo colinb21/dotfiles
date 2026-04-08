@@ -40,7 +40,7 @@
      (python . t) (shell . t) (haskell . t) (dot . t) (octave . t)))
   (org-capture-templates
    '(
-     ("t" "Todo" entry (file+headline "$ORG_DIR/ToDo.org" "Tasks")
+     ("t" "Todo" entry (file+headline "ToDo.org" "Tasks")
       "* TODO %?\n  %i\n  %a")
      ("note"
       "Note (Org Protocol)"
