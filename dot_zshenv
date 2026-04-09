@@ -1,7 +1,7 @@
 # uv
 export PATH="$HOME/.local/bin:$PATH"
 
-if [ -f $HOME/.lmstudio/bin]; then
+if [ -d $HOME/.lmstudio/bin ]; then
     export PATH="$HOME/.lmstudio/bin:$PATH"
 fi
 
