@@ -1,5 +1,9 @@
 # uv
-export PATH="$HOME/.local/bin:/Users/cbenson/.lmstudio/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
+
+if [ -f $HOME/.lmstudio/bin]; then
+    export PATH="$HOME/.lmstudio/bin:$PATH"
+fi
 
 if [ -f $HOME/.do_not_share.sh ]; then
     source $HOME/.do_not_share.sh
