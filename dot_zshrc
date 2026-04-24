@@ -61,25 +61,28 @@ add-zsh-hook precmd vcs_info
 # e.g. here we add the Git information in red  
 #PROMPT='%1~ %F{red}${vcs_info_msg_0_}%f %# '
 
-SPACESHIP_PROMPT_ASYNC=true
-SPACESHIP_PROMPT_ADD_NEWLINE=true
-SPACESHIP_CHAR_SYMBOL="⚡"
+# SPACESHIP_PROMPT_ASYNC=true
+# SPACESHIP_PROMPT_ADD_NEWLINE=true
+# SPACESHIP_CHAR_SYMBOL="⚡"
 
-# Only load what you actually use
-SPACESHIP_PROMPT_ORDER=(
-    time
-    user
-    dir
-    git
-    line_sep
-    char
-)
-source "/opt/homebrew/opt/spaceship/spaceship.zsh"
+# # Only load what you actually use
+# SPACESHIP_PROMPT_ORDER=(
+#     time
+#     user
+#     dir
+#     git
+#     line_sep
+#     char
+# )
+# source "/opt/homebrew/opt/spaceship/spaceship.zsh"
 
 # Now you can list installed prompts with prompt -p. This will give you# the theme name and an example of what it looks like rendered.
 #
 # Select the theme you want with prompt $THEME.
 autoload -Uz promptinit; promptinit
+
+prompt pure
+
 
 # Enable checking for (un)staged changes, enabling use of %u and %c
 zstyle ':vcs_info:*' check-for-changes true
