@@ -140,3 +140,5 @@ export PATH="$PATH:/Users/cbenson/.lmstudio/bin"
 export GOPATH=$HOME/go/bin:$HOME/go/bin/bin
 export GOROOT=/usr/local/go
 export PATH=$PATH:/usr/local/go/bin:$GOPATH
+
+fpath+=("$(brew --prefix)/share/zsh/site-functions")
