@@ -13,6 +13,8 @@ setopt HIST_IGNORE_SPACE
 
 alias fzfp="fzf --preview 'bat --style=numbers --color=always --line-range :500 {}'"
 
+alias myvm="et -c "tmux -CC new -A colin-vm" colin@colin-vm.dev.us-west-1.nexthop.ai"
+
 vterm_printf(){
     if [ -n "$TMUX" ]; then
         # Tell tmux to pass the escape sequences through
@@ -136,6 +138,9 @@ source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 export GOPATH=$HOME/go/bin:$HOME/go/bin/bin
 export GOROOT=/usr/local/go
 export PATH=$PATH:/usr/local/go/bin:$GOPATH
+
+# needed to stop gpg signing failed: Inappropriate ioctl for device
+export GPG_TTY=$(tty)
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
