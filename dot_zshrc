@@ -13,6 +13,8 @@ setopt HIST_IGNORE_SPACE
 
 alias fzfp="fzf --preview 'bat --style=numbers --color=always --line-range :500 {}'"
 
+alias myvm="et -c "tmux -CC new -A colin-vm" colin@colin-vm.dev.us-west-1.nexthop.ai"
+
 vterm_printf(){
     if [ -n "$TMUX" ]; then
         # Tell tmux to pass the escape sequences through
@@ -142,6 +144,9 @@ alias nvm="unalias nvm; [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"; nvm $@"
 export GOPATH=$HOME/go/bin:$HOME/go/bin/bin
 export GOROOT=/usr/local/go
 export PATH=$PATH:/usr/local/go/bin:$GOPATH
+
+# needed to stop gpg signing failed: Inappropriate ioctl for device
+export GPG_TTY=$(tty)
 
 # leave this last. Un-comment it, and the initialization at the top of
 # the file to turn on startup profiling.
