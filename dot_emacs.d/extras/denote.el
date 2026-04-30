@@ -18,7 +18,8 @@
    ("C-c n r" . denote-rename-file)
    ("C-c n R" . denote-rename-file-using-front-matter)
    ("C-c n k" . denote-keywords-add)
-   ("C-c n K" . denote-keywords-remove)))
+   ("C-c n K" . denote-keywords-remove)
+   ("C-c n j" . denote-journal-new-or-existing-entry)))
 
 (use-package denote-org
   :ensure t
