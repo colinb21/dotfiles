@@ -102,8 +102,11 @@
 (load-file (expand-file-name "extras/spelling.el" user-emacs-directory))
 (load-file (expand-file-name "extras/load-consult.el" user-emacs-directory))
 (load-file (expand-file-name "extras/completion.el" user-emacs-directory))
-(load-file (expand-file-name "extras/denote.el" user-emacs-directory))
-(load-file (expand-file-name "extras/org.el" user-emacs-directory))
+
+(when (eq system-type 'darwin)
+  (load-file (expand-file-name "extras/denote.el" user-emacs-directory))
+  (load-file (expand-file-name "extras/org.el" user-emacs-directory)))
+
 (load-file (expand-file-name "extras/appearance.el" user-emacs-directory))
 (load-file (expand-file-name "extras/misc.el" user-emacs-directory))
 (load-file (expand-file-name "extras/programming.el" user-emacs-directory))
@@ -114,7 +117,7 @@
 (load-file (expand-file-name "extras/treesit.el" user-emacs-directory))
 (load-file (expand-file-name "extras/rust.el" user-emacs-directory))
 (load-file (expand-file-name "extras/nano.el" user-emacs-directory))
-(load-file (expand-file-name "extras/gptel.el" user-emacs-directory))
+;;(load-file (expand-file-name "extras/gptel.el" user-emacs-directory))
 (load-file (expand-file-name "extras/casual.el" user-emacs-directory))
 (load-file (expand-file-name "extras/embark.el" user-emacs-directory))
 (load-file (expand-file-name "extras/snippets.el" user-emacs-directory))
