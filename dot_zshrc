@@ -135,15 +135,24 @@ FZF-EOF"
 # then
 alias python3.14='uv run --python=3.14 python3'
 
-source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+if [ -f $HOME/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
+    source $HOME/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+else
+    source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+fi
 
-source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+if [ -f $HOME/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
+    source $HOME/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+else
+    source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+fi
 
 # GOLANG setup
-
-export GOPATH=$HOME/go/bin:$HOME/go/bin/bin
-export GOROOT=/usr/local/go
-export PATH=$PATH:/usr/local/go/bin:$GOPATH
+if [ -f $HOME/go/bin ]
+   export GOPATH=$HOME/go/bin:$HOME/go/bin/bin
+   export GOROOT=/usr/local/go
+   export PATH=$PATH:/usr/local/go/bin:$GOPATH
+fi
 
 # needed to stop gpg signing failed: Inappropriate ioctl for device
 export GPG_TTY=$(tty)
