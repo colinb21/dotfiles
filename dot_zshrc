@@ -40,7 +40,11 @@ vterm_prompt_end() {
 # needed to make dir tracking work in Emacs/vterm.
 precmd_functions+=(vterm_prompt_end)
 
-export EDITOR=/Applications/Emacs.app//Contents/MacOS/bin/emacsclient
+if [ -f /Applications/Emacs.app//Contents/MacOS/bin/emacsclient ]; then
+    export EDITOR=/Applications/Emacs.app//Contents/MacOS/bin/emacsclient
+else
+    export EDITOR=emacsclient
+fi
 
 # hunspell dictionary
 export DICPATH=$HOME/Library/Spelling/dict-en
