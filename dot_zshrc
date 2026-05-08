@@ -166,7 +166,7 @@ fi
 # needed to stop gpg signing failed: Inappropriate ioctl for device
 export GPG_TTY=$(tty)
 
-if [ -d $(brew --prefix)/share/zsh/site-functions ]; then
+if [ -d /opt/homebrew/share/zsh/site-functions ]; then
     fpath+=("$(brew --prefix)/share/zsh/site-functions")
 fi
 
