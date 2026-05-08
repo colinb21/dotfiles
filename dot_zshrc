@@ -154,7 +154,7 @@ export NVM_DIR="$HOME/.nvm"
 alias nvm="unalias nvm; [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"; nvm $@"
 
 # GOLANG setup
-if [ -f $HOME/go/bin ]
+if [ -f $HOME/go/bin ] then
    export GOPATH=$HOME/go/bin:$HOME/go/bin/bin
    export GOROOT=/usr/local/go
    export PATH=$PATH:/usr/local/go/bin:$GOPATH
