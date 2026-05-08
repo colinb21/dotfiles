@@ -85,6 +85,9 @@ add-zsh-hook precmd vcs_info
 # Now you can list installed prompts with prompt -p. This will give you# the theme name and an example of what it looks like rendered.
 #
 # Select the theme you want with prompt $THEME.
+if [ -f $HOME/.zsh/pure/prompt_pure_setup ]; then
+    fpath+=$HOME/.zsh/pure
+fi
 autoload -Uz promptinit; promptinit
 
 prompt pure
