@@ -166,7 +166,9 @@ fi
 # needed to stop gpg signing failed: Inappropriate ioctl for device
 export GPG_TTY=$(tty)
 
-fpath+=("$(brew --prefix)/share/zsh/site-functions")
+if [ -d $(brew --prefix)/share/zsh/site-functions ]; then
+    fpath+=("$(brew --prefix)/share/zsh/site-functions")
+fi
 
 # leave this last. Un-comment it, and the initialization at the top of
 # the file to turn on startup profiling.
