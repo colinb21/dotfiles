@@ -22,7 +22,7 @@
   :custom
   (quick-sdcv-dictionary-prefix-symbol "►")
   (quick-sdcv-ellipsis " ▼ "))
-(global-set-key (kbd "C-c s") 'quick-sdcv-search-at-point)
+(bind-key "C-c s" 'quick-sdcv-search-at-point)
 
 ;; Cape-jinx package and configuration:
 ;; sounds wonderful but keep crashing with some sort of cache error in
