@@ -64,15 +64,15 @@
     (if (bound-and-true-p paredit-mode)
         (paredit-backward-delete arg)
       (backward-delete-char arg))))
-(global-set-key (kbd "C-w") 'vz/backward-delete-or-kill-region)
+(bind-key "C-w" 'vz/backward-delete-or-kill-region)
 
 ;; forward-sentence and org-forward-sentence (both M-e by default)
 ;; seem spectacularly useless at detecting the end of sentences in
 ;; English. Try this instead.
 (use-package  sentence-navigation
   :defer t)
-(global-set-key (kbd "M-e") 'sentence-nav-forward)
-(global-set-key (kbd "M-a") 'sentence-nav-backward)
+(bind-key "M-e" 'sentence-nav-forward)
+(bind-key "M-a" 'sentence-nav-backward)
 
 (use-package avy
   :bind (("M-j" . avy-goto-char-timer)))
@@ -80,10 +80,10 @@
 ;; Helpful is an alternative to the built-in Emacs help that provides
 ;; much more contextual information.
 (use-package helpful)
-(global-set-key (kbd "C-h f") #'helpful-callable)
-(global-set-key (kbd "C-h v") #'helpful-variable)
-(global-set-key (kbd "C-h k") #'helpful-key)
-(global-set-key (kbd "C-h x") #'helpful-command)
+(bind-key "C-h f" #'helpful-callable)
+(bind-key "C-h v" #'helpful-variable)
+(bind-key "C-h k" #'helpful-key)
+(bind-key "C-h x" #'helpful-command)
 
 ;; Replace highlighted text with what I type rather than just
 ;; inserting at point.
