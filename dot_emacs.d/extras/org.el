@@ -93,8 +93,7 @@
 
 ;; :bind
 ;; (:map org-mode-map ("<M-return>" . 'org-insert-heading))
-(global-set-key (kbd "M-<return>") 'org-insert-heading)
-
+(bind-key "M-<return>" 'org-insert-heading)
 
 ;; Then, we set up a font-lock substitution for list markers (I always
 ;; use “-” for lists, but you can change this if you want) by
