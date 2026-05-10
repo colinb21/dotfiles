@@ -12,17 +12,21 @@
 
 (global-set-key (kbd "C-x C-f") #'chezmoi-wrap-find-file)
 
-(defun chezmoi-git-sync()
+(defun chezmoi-git-sync ()
   "Git autocommit hook for Chezmoi"
-    (if chezmoi-mode
-        (let ((target (string-trim (shell-command-to-string
-                                    (format "chezmoi target-path %s" buffer-file-name)))))
-          (if (not (= 0 (shell-command
-                         (format "chezmoi git commit -- -m 'updates to %s' %s"
-                                 target buffer-file-name))))
-              (user-error "Error commiting changes"))
-          (if (not (= 0 (shell-command "chezmoi git push")))
-              (user-error "Error pushing changes")))))
+  (if chezmoi-mode
+      (let* ((target (string-trim (shell-command-to-string
+                                   (format "chezmoi target-path %s" buffer-file-name))))
+             (default-msg (format "updates to %s" target))
+             (msg (read-string (format "Commit message (default: %s): " default-msg)
+                               nil nil default-msg)))
+        (if (not (= 0 (shell-command
+                       (format "chezmoi git commit -- -m %s %s"
+                               (shell-quote-argument msg)
+                               (shell-quote-argument buffer-file-name)))))
+            (user-error "Error commiting changes"))
+        (if (not (= 0 (shell-command "chezmoi git push")))
+            (user-error "Error pushing changes")))))
 
 (add-hook 'after-save-hook #'chezmoi-git-sync)
 
