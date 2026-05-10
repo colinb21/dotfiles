@@ -10,7 +10,7 @@
       (chezmoi-find file)
     (find-file file)))
 
-(global-set-key (kbd "C-x C-f") #'chezmoi-wrap-find-file)
+(bind-key "C-x C-f" 'chezmoi-wrap-find-file)
 
 (defun chezmoi-git-sync ()
   "Git autocommit hook for Chezmoi"
