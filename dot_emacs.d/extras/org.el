@@ -117,10 +117,10 @@ Does nothing if `visual-line-mode' is on."
       (fill-paragraph justify region)))
 
 ;; Replace M-q with new binding:
-(global-set-key "\M-q" 'maybe-fill-paragraph)
+(bind-key "\M-q" 'maybe-fill-paragraph)
 
-(define-key global-map (kbd "C-c l") 'org-store-link)
-(define-key global-map (kbd "C-c a") 'org-agenda)
+(bind-key "C-c l" 'org-store-link)
+(bind-key "C-c a" 'org-agenda)
 
 ;; nicer text centring and line breaks
 (use-package olivetti
@@ -128,7 +128,7 @@ Does nothing if `visual-line-mode' is on."
 
 ;; by itself C-c c creates a new capture buffer. Prefixed with C-u it
 ;; takes you to the set of all such capture buffers.
-(define-key global-map (kbd "C-c c") 'org-capture)
+(bind-key "C-c c" 'org-capture)
 
 (use-package org-superstar
     :config
