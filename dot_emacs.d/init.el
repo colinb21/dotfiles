@@ -44,8 +44,16 @@
 ;;a file name on the form #file#. If you don’t want to clutter up your
 ;;file tree with Emacs’ backup files, you can save them to a dedicated
 ;;directory:
-(setq backup-directory-alist
-      `(("." . ,(concat user-emacs-directory "backup-files"))))
+;; Set backup directory
+(setq backup-directory-alist `(("." . ,(expand-file-name "~/.emacs.d/backups"))))
+
+;; Enable backups
+(setq make-backup-files t)
+
+;; Ensure the backup directory exists
+(let ((backup-dir "~/.emacs.d/backups"))
+  (if (not (file-exists-p backup-dir))
+      (make-directory backup-dir t)))
 
 ;; update packages every 4 days
 (use-package auto-package-update :ensure t
