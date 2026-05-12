@@ -194,3 +194,5 @@
 # don't display menus when running in terminal mode
 (if (not (display-graphic-p))
     (menu-bar-mode -1))
+
+(print "Howdy")
