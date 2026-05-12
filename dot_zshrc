@@ -175,7 +175,8 @@ fi
 vterm_prompt_end(){
     vterm_printf "51;A$(whoami)@$(hostname):$(pwd)"
 }
-PS1=$PS1'\[$(vterm_prompt_end)\]'
+# I got the line below from the vterm docs but it just messes up my prompt.
+# PS1=$PS1'\[$(vterm_prompt_end)\]'
 
 # leave this last. Un-comment it, and the initialization at the top of
 # the file to turn on startup profiling.
