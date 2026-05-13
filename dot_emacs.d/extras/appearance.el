@@ -191,7 +191,7 @@
 
 (global-hl-line-mode 1)
 
-# don't display menus when running in terminal mode
+;; don't display menus when running in terminal mode
 (if (not (display-graphic-p))
     (menu-bar-mode -1))
 
