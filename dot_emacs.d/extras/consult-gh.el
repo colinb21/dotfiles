@@ -29,8 +29,10 @@
   (consult-gh-embark-mode +1))
 
 
+;; not ready for prime-time. See https://github.com/armindarvish/consult-gh
+;; for changes.
 ;; Install `consult-gh-forge' for forge actions
-(use-package consult-gh-forge
- :config
- (consult-gh-forge-mode +1)
- (setq consult-gh-forge-timeout-seconds 20))
+;; (use-package consult-gh-forge
+;;  :config
+;;  (consult-gh-forge-mode +1)
+;;  (setq consult-gh-forge-timeout-seconds 20))
