@@ -8,8 +8,14 @@ source <(fzf --zsh)
 # Open in tmux popup if on tmux, otherwise use --height mode
 export FZF_DEFAULT_OPTS='--height 40% --tmux bottom,40% --layout reverse --border top'
 
-# Do not record an event starting with a space.
-setopt HIST_IGNORE_SPACE
+
+setopt HIST_IGNORE_SPACE # Do not record an event starting with a space.
+setopt APPEND_HISTORY      # append instead of overwrite
+setopt INC_APPEND_HISTORY  # write each command as it runs
+setopt SHARE_HISTORY       # share history across running sessions
+HISTSIZE=50000
+SAVEHIST=50000
+HISTFILE=~/.zsh_history
 
 alias fzfp="fzf --preview 'bat --style=numbers --color=always --line-range :500 {}'"
 
