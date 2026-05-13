@@ -89,6 +89,11 @@ add-zsh-hook precmd vcs_info
 if [ -f $HOME/.zsh/pure/prompt_pure_setup ]; then
     fpath+=$HOME/.zsh/pure
 fi
+
+if [ -d /opt/homebrew/share/zsh/site-functions ]; then
+    fpath+=("$(brew --prefix)/share/zsh/site-functions")
+fi
+
 autoload -Uz promptinit; promptinit
 
 prompt pure
@@ -164,9 +169,6 @@ export GPG_TTY=$(tty)
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-if [ -d /opt/homebrew/share/zsh/site-functions ]; then
-    fpath+=("$(brew --prefix)/share/zsh/site-functions")
-fi
 
 # I think this has to go after prompt setup.
 vterm_prompt_end(){
