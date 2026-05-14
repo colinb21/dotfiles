@@ -1,7 +1,7 @@
 
 hs.alert.show("Config loaded")
-hs.loadSpoon("WinWin")
-hs.loadSpoon("WindowHalfsAndThirds")
+--hs.loadSpoon("WinWin")
+--hs.loadSpoon("WindowHalfsAndThirds")
 
 local cac = {"cmd", "alt", "ctrl"}
 
@@ -10,6 +10,8 @@ function bindKey(key, fn)
 end
 
 bindKey('l', function() hs.grid.show() end)
+
+require "org-capture-integration"
 
 --bindKey('h', function() spoon.WinWin:stepResize('left') end)
 --bindKey(';', function() spoon.WinWin:stepResize('right') end)

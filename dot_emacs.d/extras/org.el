@@ -39,42 +39,14 @@
    '((d2 . t)(ditaa . t) (scheme . t) (C . t) (emacs-lisp . t)
      (python . t) (shell . t) (haskell . t) (dot . t) (octave . t)))
   (org-capture-templates
-   '(
+   `(
      ("t" "Todo" entry (file+headline "ToDo.org" "Tasks")
       "* TODO %?\n  %i\n  %a")
-     ("note"
-      "Note (Org Protocol)"
-      entry
-      (file "~/org/notes.org")
-      (function (lambda ()
-                  (string-join
-                   '("* %U"
-                     "%i")
-                   "\n")))
-      :prepend t
-      :immediate-finish t
-      :empty-lines-after 1)
-     ;; key "t" description "todo" type "entry - an org mode entry
-     ;; with a headline, child of the target"
-     ;; ("t" "todo" entry
-     ;;  ;; target "file+headline <PATH> "Tasks" - in the file, under a heading "Tasks"
-     ;;  (file+headline "~/.emacs.d/org-todo/ToDo.org" "Tasks")
-     ;;  ;; template "* TODO [#A] " %? -- after completing template, put point here
-     ;;  "* TODO [#A] %?")
-     ;; ("j" "journal" entry
-     ;;  (file+olp+datetree "~/.emacs.d/org-todo/Journal.org")
-     ;;  "* %?" :empty-lines 1)
-     ;; ("f" "Fleeting note" item
-     ;;  (file+headline org-default-notes-file "Notes")
-     ;;  "- %?")
-      ;;     ("p" "Permanent note" plain
-      ;; (file denote-last-path)
-      ;; #'denote-org-capture
-      ;; :no-save t
-      ;; :immediate-finish nil
-      ;; :kill-buffer t
-      ;; :jump-to-captured t)
-))
+     ("g" "Google Doc link" entry
+      (file ,(expand-file-name "google-doc-captures.org" (getenv "DENOTE_DIR")))
+      "* Google doc %i"
+      ;;      "* TODO %:description\n  %:link\n  %t\n"
+      :immediate-finish t)))
   (org-default-priority 65)
   (org-ditaa-jar-path "~/.emacs.d/vendor/ditaa0_9.jar")
   (org-hide-emphasis-markers t)
