@@ -130,7 +130,8 @@
 (load-file (expand-file-name "extras/casual.el" user-emacs-directory))
 (load-file (expand-file-name "extras/embark.el" user-emacs-directory))
 (load-file (expand-file-name "extras/snippets.el" user-emacs-directory))
-(load-file (expand-file-name "extras/chezmoi.el" user-emacs-directory))
+(when (eq system-type 'darwin)
+  (load-file (expand-file-name "extras/chezmoi.el" user-emacs-directory)))
 (load-file (expand-file-name "extras/consult-gh.el" user-emacs-directory))
 
 (custom-set-faces

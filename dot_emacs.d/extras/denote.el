@@ -146,3 +146,13 @@ Names are defined in `my-denote-colleagues'."
       (let ((attach-cmd (concat "hdiutil attach " private-disk)))
 	(shell-command attach-cmd nil nil))))
 
+
+(with-eval-after-load 'org-capture
+  (add-to-list 'org-capture-templates
+               '("n" "New note (with Denote)" plain
+                 (file denote-last-path)
+                 #'denote-org-capture
+                 :no-save t
+                 :immediate-finish nil
+                 :kill-buffer t
+                 :jump-to-captured t)))
