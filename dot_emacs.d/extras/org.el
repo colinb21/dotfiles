@@ -13,6 +13,15 @@
     (setq-default org-src-fontify-natively t)
 
     ;; stop babel asking me if I really want to evaluate a snippet
+    (defun my/org-capture-web (url title body)
+      "Capture a web snippet. Intended to be invoked via emacsclient -e."
+      (org-link-store-props :type "http"
+                            :link url
+                            :description title
+                            :annotation (org-link-make-string url title))
+      (let ((org-capture-link-is-already-stored t)
+            (org-capture-initial body))
+        (org-capture nil "l")))
     (defun my-org-confirm-babel-evaluate (lang body)
       (not (or (string= lang "ditaa")
 	       (string= lang "C++")
@@ -172,6 +181,12 @@ Does nothing if `visual-line-mode' is on."
   "Advise capture-destroy to close the frame."
   (if (equal "capture" (frame-parameter nil 'name))
       (delete-frame)))
+
+(add-to-list 'org-capture-templates
+             `("l" "Link" entry
+               (file ,(expand-file-name "file-foo" (getenv "DENOTE_DIR")))
+               "* %:description :web:\n:URL: %:link\n:CAPTURED: %U\n\n\n#+begin_quote\n%i\n#+end_quote\n\n%?"
+               :immediate-finish t))
 
 (use-package org-bullets
   :after org
