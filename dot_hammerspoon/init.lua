@@ -142,3 +142,5 @@ function rPrint(s, l, i) -- recursive Print (structure, limit, indent)
 end
 
 -- hs.loadSpoon('Cherry')
+
+require "fetch-page-helper"
