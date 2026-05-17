@@ -22,12 +22,12 @@
       (let ((org-capture-link-is-already-stored t)
             (org-capture-initial body))
         (org-capture nil "l")))
-    (defun my-org-confirm-babel-evaluate (lang body)
+    (defun my/org-confirm-babel-evaluate (lang body)
       (not (or (string= lang "ditaa")
 	       (string= lang "C++")
 	       (string= lang "haskell")
                (string= lang "d2"))))
-    (setq org-confirm-babel-evaluate 'my-org-confirm-babel-evaluate)
+    (setq org-confirm-babel-evaluate 'my/org-confirm-babel-evaluate)
     (setopt org-directory (getenv "ORG_DIR"))
 
 
