@@ -21,7 +21,7 @@
                             :annotation (org-link-make-string url title))
       (let ((org-capture-link-is-already-stored t)
             (org-capture-initial body))
-        (org-capture nil "l")))
+        (org-capture nil "g")))
     (defun my/org-confirm-babel-evaluate (lang body)
       (not (or (string= lang "ditaa")
 	       (string= lang "C++")
