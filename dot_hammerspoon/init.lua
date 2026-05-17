@@ -1,7 +1,7 @@
 
 hs.alert.show("Config loaded")
-hs.loadSpoon("WinWin")
-hs.loadSpoon("WindowHalfsAndThirds")
+--hs.loadSpoon("WinWin")
+--hs.loadSpoon("WindowHalfsAndThirds")
 
 local cac = {"cmd", "alt", "ctrl"}
 
