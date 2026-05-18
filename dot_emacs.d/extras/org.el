@@ -21,11 +21,11 @@
                             :annotation (org-link-make-string url title))
       (let ((org-capture-link-is-already-stored t)
             (org-capture-initial body))
-        (org-capture nil "g")))
+        (org-capture nil "w")))
     (defun my/org-confirm-babel-evaluate (lang body)
       (not (or (string= lang "ditaa")
-	       (string= lang "C++")
-	       (string= lang "haskell")
+	           (string= lang "C++")
+	           (string= lang "haskell")
                (string= lang "d2"))))
     (setq org-confirm-babel-evaluate 'my/org-confirm-babel-evaluate)
     (setopt org-directory (getenv "ORG_DIR"))
@@ -34,13 +34,13 @@
     ;; variable-pitch as opposed to fixed width characters visual line
     ;; "ong lines will flow and adjust to the width of the window. "
     (add-hook 'org-mode-hook
-	      (lambda ()
-		(variable-pitch-mode)
-		(visual-line-mode)))
+	          (lambda ()
+		        (variable-pitch-mode)
+		        (visual-line-mode)))
     ;; org markup for things surrounded by asterisks!
     (add-to-list 'org-emphasis-alist
-		 '("*" (:foreground "red")
-		   ))
+		         '("*" (:foreground "red")
+		           ))
     (add-to-list 'org-modules 'org-tempo))
   :custom
   (org-agenda-window-setup 'current-window)
@@ -49,13 +49,14 @@
      (python . t) (shell . t) (haskell . t) (dot . t) (octave . t)))
   (org-capture-templates
    `(
-     ("t" "Todo" entry (file+headline "ToDo.org" "Tasks")
-      "* TODO %?\n  %i\n  %a")
-     ("g" "Google Doc link" entry
+     ("t" "Todo" entry (file+headline "ToDo.org" "Tasks") "* TODO %?\n  %i\n  %a")
+     ("w" "Web snippet" entry
       (file ,(expand-file-name "google-doc-captures.org" (getenv "DENOTE_DIR")))
-      "* Google doc %i"
-      ;;      "* TODO %:description\n  %:link\n  %t\n"
-      :immediate-finish t)))
+      ;;      "* Google doc %i"
+      "* %:description :web:\n:PROPERTIES:\n:URL: %:link\n:CAPTURED: %U\n:END:\n\n#+begin_quote\n%i\n#+end_quote\n\n%?"
+      ;;      "* LINK %:description\n :web:\n %:link\n%i  %t\n"
+      ;;      :immediate-finish t
+      )))
   (org-default-priority 65)
   (org-ditaa-jar-path "~/.emacs.d/vendor/ditaa0_9.jar")
   (org-hide-emphasis-markers t)
@@ -64,8 +65,8 @@
   (org-log-done t)
   (org-lowest-priority 67)
   (org-priority-faces'((65 :foreground "#F0DFAF" :weight bold)
-		       (66 :foreground "LightSteelBlue")
-		       (67 :foreground "OliveDrab")))
+		               (66 :foreground "LightSteelBlue")
+		               (67 :foreground "OliveDrab")))
   (org-startup-folded 'overview)
   (org-startup-indented t))
 
@@ -154,11 +155,11 @@ Does nothing if `visual-line-mode' is on."
   (if (equal "capture" (frame-parameter nil 'name))
       (delete-frame)))
 
-(add-to-list 'org-capture-templates
-             `("l" "Link" entry
-               (file ,(expand-file-name "file-foo" (getenv "DENOTE_DIR")))
-               "* %:description :web:\n:URL: %:link\n:CAPTURED: %U\n\n\n#+begin_quote\n%i\n#+end_quote\n\n%?"
-               :immediate-finish t))
+;; (add-to-list 'org-capture-templates
+;;              `("l" "Link" entry
+;;                (file ,(expand-file-name "file-foo" (getenv "DENOTE_DIR")))
+;;                "* %:description :web:\n:URL: %:link\n:CAPTURED: %U\n\n\n#+begin_quote\n%i\n#+end_quote\n\n%?"
+;;                :immediate-finish t))
 
 (use-package org-bullets
   :after org
