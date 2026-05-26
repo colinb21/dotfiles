@@ -195,4 +195,4 @@
 (if (not (display-graphic-p))
     (menu-bar-mode -1))
 
-(print "Howdy")
+(tool-bar-mode -1)
