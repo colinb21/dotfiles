@@ -29,6 +29,7 @@
                (string= lang "d2"))))
     (setq org-confirm-babel-evaluate 'my/org-confirm-babel-evaluate)
     (setopt org-directory (getenv "ORG_DIR"))
+    (setq org-log-into-drawer t)
 
 
     ;; variable-pitch as opposed to fixed width characters visual line
