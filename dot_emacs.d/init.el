@@ -68,6 +68,10 @@
   (setq exec-path-from-shell-variables '("PATH" "GOPATH" "PRIVATE_DISK" "DENOTE_DIR" "ORG_DIR" "MY_DENOTE_COLLEAGUES" "GPG_TTY"))
   (exec-path-from-shell-initialize))
 
+;; this needs to run early.
+(when (file-exists-p "~/.emacs.d/extras/colins-local-config.el")
+  (load "~/.emacs.d/extras/colins-local-config.el"))
+
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -77,6 +81,16 @@
  '(ns-command-modifier 'meta)
  '(org-agenda-files (list (expand-file-name "ToDo.org" (getenv "ORG_DIR"))) nil nil "Customized with use-package org")
  '(warning-suppress-types '((use-package) (comp))))
+
+;; conditional custom variables. Not appropriate to set these inside
+;; custom-set-variables
+(pcase my/computer
+  ('work (setq org-agenda-files
+               "/Volumes/Unshared/denotes/20260525T100704--candidate-state-machine__hiring.org"
+               (list "/Volumes/Unshared/denotes/20260525T100704--candidate-state-machine__hiring.org"(expand-file-name "ToDo.org" (getenv "ORG_DIR")))))
+  ('home (setq org-agenda-files
+               (list "/Volumes/Unshared/denotes/20260525T100704--candidate-state-machine__hiring.org"(expand-file-name "ToDo.org" (getenv "ORG_DIR"))))))
+
 
 ;; Blackout is a package which allows you to hide or customize the
 ;; display of major and minor modes in the mode line.
@@ -106,9 +120,6 @@
 (use-package general)
 
 (use-package nerd-icons)
-
-(when (file-exists-p "~/.emacs.d/extras/colins-local-config.el")
-  (load "~/.emacs.d/extras/colins-local-config.el"))
 
 (load-file (expand-file-name "extras/spelling.el" user-emacs-directory))
 (load-file (expand-file-name "extras/load-consult.el" user-emacs-directory))
