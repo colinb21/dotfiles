@@ -79,17 +79,15 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(ns-command-modifier 'meta)
- '(org-agenda-files (list (expand-file-name "ToDo.org" (getenv "ORG_DIR"))) nil nil "Customized with use-package org")
  '(warning-suppress-types '((use-package) (comp))))
 
 ;; conditional custom variables. Not appropriate to set these inside
 ;; custom-set-variables
 (pcase my/computer
   ('work (setq org-agenda-files
-               "/Volumes/Unshared/denotes/20260525T100704--candidate-state-machine__hiring.org"
-               (list "/Volumes/Unshared/denotes/20260525T100704--candidate-state-machine__hiring.org"(expand-file-name "ToDo.org" (getenv "ORG_DIR")))))
+	       (list "/Volumes/Unshared/denotes/20260525T100704--candidate-state-machine__hiring.org"(expand-file-name "ToDo.org" (getenv "ORG_DIR")))))
   ('home (setq org-agenda-files
-               (list "/Volumes/Unshared/denotes/20260525T100704--candidate-state-machine__hiring.org"(expand-file-name "ToDo.org" (getenv "ORG_DIR"))))))
+	       (list (expand-file-name "ToDo.org" (getenv "ORG_DIR"))))))
 
 
 ;; Blackout is a package which allows you to hide or customize the
