@@ -107,6 +107,9 @@
 
 (use-package nerd-icons)
 
+(when (file-exists-p "~/.emacs.d/extras/colins-local-config.el")
+  (load "~/.emacs.d/extras/colins-local-config.el"))
+
 (load-file (expand-file-name "extras/spelling.el" user-emacs-directory))
 (load-file (expand-file-name "extras/load-consult.el" user-emacs-directory))
 (load-file (expand-file-name "extras/completion.el" user-emacs-directory))
