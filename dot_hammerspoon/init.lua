@@ -55,5 +55,15 @@ end
 
 -- hs.loadSpoon('Cherry')
 
+-- Show a menubar warning when Secure Input is blocking Hammerspoon
+--
+-- this breaks hs.grid and fetch-page-helper. The fix is to search for
+-- whichever window is hogging attention with a password prompt.
+local secureInputTimer = hs.timer.doEvery(5, function()
+    if hs.eventtap.isSecureInputEnabled() then
+        hs.alert("⚠️ Secure Input is enabled — hs.grid keys won't work")
+    end
+end)
+
 require "fetch-page-helper"
 require "screen-grid-stuff"
