@@ -14,6 +14,13 @@
       prescient-sort-full-matches-first t ; Works well with `initialism'.
       prescient-sort-length-enable t)
 
+(use-package vertico-posframe)
+(vertico-posframe-mode 1)
+
+(setq vertico-posframe-parameters
+      '((left-fringe . 8)
+        (right-fringe . 8)))
+
 ;; Save recency and frequency rankings to disk, which let them become better
 ;; over time.
 (prescient-persist-mode 1)
