@@ -58,6 +58,8 @@ else
     compinit -C
 fi
 
+source $HOME/work/fzf-tab/fzf-tab.plugin.zsh
+
 #eval "$(uv --generate-shell-completion zsh)"
 #eval "$(uvx --generate-shell-completion zsh)"
 
