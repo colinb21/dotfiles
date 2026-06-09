@@ -20,11 +20,21 @@ HISTFILE=~/.zsh_history
 
 source $HOME/.vterm-setup.zsh 
 
-if [ -f /Applications/Emacs.app//Contents/MacOS/bin/emacsclient ]; then
-    export EDITOR=/Applications/Emacs.app//Contents/MacOS/bin/emacsclient
+if [ -x /Applications/Emacs.app/Contents/MacOS/bin/emacsclient ]; then
+    emacsclient_bin=/Applications/Emacs.app/Contents/MacOS/bin/emacsclient
 else
-    export EDITOR=emacsclient
+    emacsclient_bin=emacsclient
 fi
+
+if [ -n "$TMUX" ]; then
+    export EDITOR="$emacsclient_bin -s server-$(tmux display-message -p '#S')"
+else
+    export EDITOR="$emacsclient_bin"
+fi
+
+unset emacsclient_bin
+
+unset emacsclient_bin
 
 # hunspell dictionary
 export DICPATH=$HOME/Library/Spelling/dict-en
