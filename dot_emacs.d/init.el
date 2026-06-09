@@ -96,6 +96,16 @@
 
 (which-function-mode)
 
+;; if Emacs is running inside a TMUX session, use the name of that
+;; session when creating the server so that later invocations of
+;; emacsclient in that session can find the correct emacs instance
+;; with:
+;;
+;;  emacsclient -s "server-$(tmux display-message -p '#S')" "$@"
+(when (getenv "TMUX")
+  (let ((session (string-trim
+                  (shell-command-to-string "tmux display-message -p '#S'"))))
+    (setq server-name (format "server-%s" session))))
 (server-start)
 
 ;; accept y or n instead of demanding yes or no every time
