@@ -62,7 +62,7 @@ prompt pure
 #
 #for a list of site functions installed by homebrew.
 autoload -Uz compinit
-if [ $(date +'%j') != $(stat -f '%Sm' -t '%j' ~/.zcompdump) ]; then
+if [ $(date +'%j') != $(date -r ~/.zcompdump +'%j' 2>/dev/null) ]; then
     compinit
 else
     compinit -C
