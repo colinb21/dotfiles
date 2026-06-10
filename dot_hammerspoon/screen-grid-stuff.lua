@@ -1,5 +1,9 @@
-local LARGE_GRID = '3x3'
 local SMALL_GRID = '2x2'
+local LARGE_GRID = '3x3'
+local WIDE_GRID = '6x3'
+
+-- Cycle order for the toggle shortcut
+local GRID_CYCLE = { SMALL_GRID, LARGE_GRID, WIDE_GRID }
 
 -- Per-screen overrides for runtime toggling (keyed by screen UUID)
 local gridOverrides = {}
@@ -30,13 +34,24 @@ local function applyAllGrids()
     end
 end
 
--- Toggle 2x2 <-> 3x3 on whichever screen the focused window lives on
+-- Cycle 2x2 -> 3x3 -> 6x3 on whichever screen the focused window lives on
 bindKey('g', function()
     local fw = hs.window.focusedWindow()
     local screen = (fw and fw:screen()) or hs.screen.mainScreen()
     local uuid = screen:getUUID()
     local current = gridOverrides[uuid] or defaultGridFor(screen)
-    gridOverrides[uuid] = (current == LARGE_GRID) and SMALL_GRID or LARGE_GRID
+
+    -- Find current position in the cycle, then advance to the next entry
+    local idx = 1
+    for i, grid in ipairs(GRID_CYCLE) do
+        if grid == current then
+            idx = i
+            break
+        end
+    end
+    local nextGrid = GRID_CYCLE[(idx % #GRID_CYCLE) + 1]
+
+    gridOverrides[uuid] = nextGrid
     applyGrid(screen)
     hs.alert.show(('Grid on %s: %s'):format(screen:name(), gridOverrides[uuid]))
 end)
