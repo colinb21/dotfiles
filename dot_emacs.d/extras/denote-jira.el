@@ -421,5 +421,33 @@ prompt to choose among the issue and any linked GitHub PRs."
 
 (global-set-key (kbd "C-c n o") #'my-denote-jira-open)
 
+(defun my-denote-jira-visit-by-key (key)
+  "Visit the Denote note for Jira KEY.
+If several notes match, prompt to choose; if none exist, offer to
+create one with `my-denote-jira-new-task'.  Intended both for
+interactive use and for invocation via emacsclient (e.g. from a
+Hammerspoon hotkey while viewing the ticket in a browser)."
+  (interactive
+   (list (my-denote-jira--normalize-key (read-string "Jira key: "))))
+  (let* ((key (my-denote-jira--normalize-key key))
+         ;; Match the key at the start of the title slug (the "KEY: Summary"
+         ;; convention), so incidental mentions elsewhere in a note's title
+         ;; are ignored.  The trailing class bounds it so that e.g. NOS-914
+         ;; does not match nos-9140.
+         (regexp (format "--%s\\([^0-9]\\|$\\)" (downcase (regexp-quote key))))
+         (files (denote-directory-files regexp)))
+    (cond
+     ((null files)
+      (when (yes-or-no-p (format "No note for %s.  Create one? " key))
+        (my-denote-jira-new-task key (denote-keywords-prompt "Topic keyword(s)"))))
+     ((= (length files) 1)
+      (find-file (car files)))
+     (t (find-file (completing-read "Choose note: " files nil :require-match))))
+    ;; Raise the frame when called from emacsclient.
+    (when (display-graphic-p)
+      (select-frame-set-input-focus (selected-frame)))))
+
+(global-set-key (kbd "C-c n v") #'my-denote-jira-visit-by-key)
+
 (provide 'denote-jira)
 ;;; denote-jira.el ends here
