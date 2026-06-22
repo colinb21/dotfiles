@@ -157,8 +157,10 @@
 (load-file (expand-file-name "extras/consult-gh.el" user-emacs-directory))
 (when (eq system-type 'darwin)
   (load-file (expand-file-name "extras/mermaid.el" user-emacs-directory)))
-(when (eq system-type 'darwin)
-  (load-file (expand-file-name "extras/denote-jira.el" user-emacs-directory)))
+(pcase my/computer
+  ('work (when (eq system-type 'darwin)
+           (load-file (expand-file-name "extras/denote-jira.el" user-emacs-directory)))))
+
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
