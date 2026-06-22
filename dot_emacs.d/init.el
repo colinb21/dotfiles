@@ -40,6 +40,11 @@
         ("nongnu" . "https://elpa.nongnu.org/nongnu/")
         ("melpa" . "https://melpa.org/packages/")))
 
+;; M-x straight-overview to figure out which packages are out of date.
+(use-package straight-overview
+  :straight (:host github :repo "alberti42/straight-overview")
+  :commands (straight-overview))
+
 ;;By default, auto-save files are stored in the current directory with
 ;;a file name on the form #file#. If you don’t want to clutter up your
 ;;file tree with Emacs’ backup files, you can save them to a dedicated
