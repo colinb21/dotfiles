@@ -67,3 +67,4 @@ end)
 
 require "fetch-page-helper"
 require "screen-grid-stuff"
+require "jira-to-denote"
