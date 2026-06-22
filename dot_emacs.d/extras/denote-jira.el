@@ -13,8 +13,13 @@
 (require 'json)
 (require 'thingatpt)
 
-(defvar my-denote-jira-base-url (getenv "JIRA_BASE_URL")
-  "Base URL of the Jira Cloud instance, used to build browse links.")
+(defvar my-denote-jira-base-url
+  (or (getenv "JIRA_BASE_URL") "https://nexthopai.atlassian.net")
+  "Base URL of the Jira Cloud instance, used to build browse links.
+Defaults to the JIRA_BASE_URL environment variable, falling back to
+the Nexthop instance.  The fallback matters when Emacs runs as a
+daemon launched outside a login shell (e.g. driven from Hammerspoon),
+where the environment variable is absent.")
 
 (defvar my-denote-jira-status-keyword "taskinbox"
   "Status keyword applied to a freshly created Jira task note.")
