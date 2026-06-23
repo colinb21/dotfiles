@@ -198,7 +198,7 @@ for topic keywords with completion against known Denote keywords."
 ;;; Status lifecycle
 
 (defvar my-denote-jira-status-keywords
-  '("taskinbox" "taskinprogress" "doreview" "docodereview" "review" "taskdone")
+  '("taskinbox" "taskinprogress" "doreview" "docodereview" "review" "taskdone" "reviewdone")
   "All status keywords used in the task lifecycle.
 Any keyword in this list is treated as a status (and is replaced
 when bumping status); the list also seeds completion in
