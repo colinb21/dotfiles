@@ -50,6 +50,9 @@
 ;;file tree with Emacs’ backup files, you can save them to a dedicated
 ;;directory:
 ;; Set backup directory
+(setq auto-save-file-name-transforms
+      `((".*" ,temporary-file-directory t)))
+
 (setq backup-directory-alist `(("." . ,(expand-file-name "~/.emacs.d/backups"))))
 
 ;; Enable backups
