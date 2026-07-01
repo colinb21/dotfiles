@@ -249,13 +249,15 @@ when bumping status); the list also seeds completion in
 workflow grows.")
 
 (defvar my-denote-jira-priority-keywords
-  '("highest" "high" "medium" "low" "lowest"
+  '("p0" "p1" "p2" "p3" "p4"
+    "highest" "high" "medium" "low" "lowest"
     "blocker" "critical" "major" "minor" "trivial")
   "All keywords treated as a Jira priority (downcased).
 A note carries at most one of these; it is replaced when the
 priority is refreshed.  Created notes use the downcased Jira
 priority name, so extend this list if your instance defines custom
-priorities not covered here.")
+priorities not covered here.  The leading p0-p4 cover the Nexthop
+instance's P-style priority scheme.")
 
 (defun my-denote-jira--priority-keyword (key)
   "Return KEY's current Jira priority as a downcased Denote keyword.
@@ -301,7 +303,8 @@ Interactively, prompt for STATUS with completion against
                   (lambda (kw)
                     (or (member kw my-denote-jira-status-keywords)
                         (and new-priority
-                             (member kw my-denote-jira-priority-keywords))))
+                             (or (equal kw new-priority)
+                                 (member kw my-denote-jira-priority-keywords)))))
                   keywords))
          (new-keywords (append topics
                                (and new-priority (list new-priority))
