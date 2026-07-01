@@ -120,6 +120,8 @@ function fshow() {
 FZF-EOF"
 }
 
+source ~/playground/repos/fzf-git.sh/fzf-git.sh
+
 if [ -f $HOME/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
     source $HOME/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 else
