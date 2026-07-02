@@ -10,6 +10,7 @@
 ;;; Code:
 
 (require 'denote)
+(require 'denote-org)
 (require 'json)
 (require 'thingatpt)
 
@@ -364,6 +365,58 @@ reporting how many notes will be touched."
                    (signature (or (denote-retrieve-filename-signature file) "")))
               (denote-rename-file file title new-keywords signature date identifier))))
         (message "Migrated status keywords in %d note(s)" (length targets))))))
+
+
+;;; Priority-sorted link dblock
+;;
+;; The stock `denote-links' dblock can only sort by a filename
+;; *component* (title, keywords, signature, identifier).  These notes
+;; instead carry a Jira priority keyword (see
+;; `my-denote-jira-priority-keywords'), and we want the list ordered by
+;; that priority.  `denote-links-by-priority' is a drop-in variant that
+;; accepts the same params but re-ranks the matched files by priority.
+
+(defun my-denote-jira--priority-rank (file)
+  "Return a sortable rank for FILE's Jira priority keyword.
+The rank is the keyword's position in
+`my-denote-jira-priority-keywords' (so `p0' outranks `p4', which
+outranks the named schemes).  Files with no known priority keyword
+sort last."
+  (let ((keywords (denote-extract-keywords-from-path file)))
+    (or (seq-some (lambda (kw)
+                    (seq-position my-denote-jira-priority-keywords kw))
+                  keywords)
+        most-positive-fixnum)))
+
+(defun org-dblock-write:denote-links-by-priority (params)
+  "Update a `denote-links-by-priority' Org dynamic block.
+Behaves like `org-dblock-write:denote-links' and accepts the same
+PARAMS (`:regexp', `:not-regexp', `:excluded-dirs-regexp',
+`:id-only', `:include-date', `:block-name'), but ignores
+`:sort-by-component'/`:reverse-sort' and instead orders the matched
+files by their Jira priority keyword via `my-denote-jira--priority-rank'.
+Notes sharing a priority keep Denote's default order.  A non-nil
+`:reverse-priority' lists lowest priority first."
+  (let* ((rx (denote-org--parse-rx (plist-get params :regexp)))
+         (not-rx (denote-org--parse-rx (plist-get params :not-regexp)))
+         (block-name (plist-get params :block-name))
+         (denote-excluded-directories-regexp
+          (or (plist-get params :excluded-dirs-regexp)
+              denote-excluded-directories-regexp))
+         (files (denote-org-dblock--files rx nil nil not-rx))
+         ;; `sort' on lists is stable, so equal-priority notes keep the
+         ;; order `denote-org-dblock--files' returned them in.
+         (sorted (sort (copy-sequence files)
+                       (lambda (a b)
+                         (< (my-denote-jira--priority-rank a)
+                            (my-denote-jira--priority-rank b))))))
+    (when (plist-get params :reverse-priority)
+      (setq sorted (nreverse sorted)))
+    (when block-name (insert "#+name: " block-name "\n"))
+    (denote-org--insert-links sorted
+                              (plist-get params :id-only)
+                              (plist-get params :include-date))
+    (join-line))) ; remove trailing empty line
 
 
 ;;; Link helpers
