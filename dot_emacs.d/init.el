@@ -151,6 +151,8 @@
 (load-file (expand-file-name "extras/python.el" user-emacs-directory))
 (load-file (expand-file-name "extras/magit.el" user-emacs-directory))
 (load-file (expand-file-name "extras/vterm.el" user-emacs-directory))
+(when (eq system-type 'darwin)
+  (load-file (expand-file-name "extras/ghostel.el" user-emacs-directory)))
 ;;(load-file (expand-file-name "extras/lsp.el" user-emacs-directory))
 (load-file (expand-file-name "extras/treesit.el" user-emacs-directory))
 (load-file (expand-file-name "extras/rust.el" user-emacs-directory))
