@@ -18,7 +18,9 @@ HISTSIZE=50000
 SAVEHIST=50000
 HISTFILE=~/.zsh_history
 
-source $HOME/.vterm-setup.zsh 
+source $HOME/.vterm-setup.zsh
+
+source $HOME/.ghostel-setup.zsh 
 
 if [ -x /Applications/Emacs.app/Contents/MacOS/bin/emacsclient ]; then
     emacsclient_bin=/Applications/Emacs.app/Contents/MacOS/bin/emacsclient
