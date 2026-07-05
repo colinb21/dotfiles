@@ -175,3 +175,19 @@ Does nothing if `visual-line-mode' is on."
   (org-modern-block-fringe nil)
   (org-modern-table nil)
   (org-modern-star nil))
+
+;; from https://news.ycombinator.com/item?id=48449187
+(defun my/org-to-markdown-clipboard ()
+  "Export org region (or buffer) to Markdown and copy to clipboard.
+  With no active region, exports the whole buffer."
+  (interactive)
+  (require 'ox-md)
+  (let* ((text (if (use-region-p)
+                   (buffer-substring-no-properties (region-beginning) (region-end))
+                 (buffer-substring-no-properties (point-min) (point-max))))
+         (md (org-export-string-as text 'md t '(:with-toc nil
+                                                          :with-author nil
+                                                          :with-date nil
+                                                          :with-title nil))))
+    (kill-new md)
+    (message "Markdown copied (%d chars)" (length md))))
