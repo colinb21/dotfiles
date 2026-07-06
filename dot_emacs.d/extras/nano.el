@@ -53,8 +53,7 @@
 
 ;; Nano key bindings modification (optional)
 ;;(require 'nano-bindings)
-
-(require my-nano-bindings)
+(load-file (expand-file-name "extras/my-nano-bindings.el" user-emacs-directory))
 
 ;; Compact layout (need to be loaded after nano-modeline)
 (when (member "-compact" command-line-args)
