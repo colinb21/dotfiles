@@ -48,8 +48,13 @@
 ;; Nano header & mode lines (optional)
 (require 'nano-modeline)
 
+;; I don't use this any more because it overrides M-ret. So I just
+;; copypasta'd the parts I really want.
+
 ;; Nano key bindings modification (optional)
-(require 'nano-bindings)
+;;(require 'nano-bindings)
+
+(require my-nano-bindings)
 
 ;; Compact layout (need to be loaded after nano-modeline)
 (when (member "-compact" command-line-args)
