@@ -1,7 +1,7 @@
 (use-package consult-gh
   :after consult
   :custom
-  (consult-gh-default-clone-directory "~/projects")
+  (consult-gh-default-clone-directory "~/playground/repos/")
   (consult-gh-show-preview t)
   (consult-gh-preview-key "C-o")
   (consult-gh-repo-action #'consult-gh--repo-browse-files-action)
