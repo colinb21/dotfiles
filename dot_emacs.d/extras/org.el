@@ -130,7 +130,7 @@ Does nothing if `visual-line-mode' is on."
 
 
 ;; stolen from timu-func-make-capture-frame
-(use-package noflet)
+;;(use-package noflet)
 (defun cb/func-make-capture-frame ()
   "Create a new frame and run `org-capture'."
   (interactive)
