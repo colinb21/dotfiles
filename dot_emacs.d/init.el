@@ -213,6 +213,11 @@
               bidi-paragraph-direction 'left-to-right)
 (setq bidi-inhibit-bpa t)
 
+(use-package jira
+  :config
+  (setq jira-token-is-personal-access-token nil)
+  (setq jira-api-version 3))
+
 ;; Emacs normally fontifies (syntax-highlights) text even while you’re
 ;; actively typing. This can cause micro-stutters, especially in
 ;; tree-sitter modes or large buffers. One setting fixes it:
