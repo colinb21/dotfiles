@@ -161,3 +161,4 @@ nvm() {
 source $HOME/.aliases.zsh
 
 #zprof
+
