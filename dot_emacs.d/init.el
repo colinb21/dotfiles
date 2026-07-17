@@ -110,10 +110,17 @@
 ;; with:
 ;;
 ;;  emacsclient -s "server-$(tmux display-message -p '#S')" "$@"
-(when (getenv "TMUX")
-  (let ((session (string-trim
-                  (shell-command-to-string "tmux display-message -p '#S'"))))
-    (setq server-name (format "server-%s" session))))
+;;
+;; The tmux session name is also reused to name the easysession session
+;; (see extras/misc.el) so that each tmux session gets its own state.
+(defun my/tmux-session-name ()
+  "Return the current TMUX session name, or nil if not inside TMUX."
+  (when (getenv "TMUX")
+    (string-trim
+     (shell-command-to-string "tmux display-message -p '#S'"))))
+
+(when-let ((session (my/tmux-session-name)))
+  (setq server-name (format "server-%s" session)))
 (server-start)
 
 ;; accept y or n instead of demanding yes or no every time
@@ -215,6 +222,7 @@
 
 (use-package jira
   :config
+  (setq jira-base-url "https://nexthopai.atlassian.net")
   (setq jira-token-is-personal-access-token nil)
   (setq jira-api-version 3))
 

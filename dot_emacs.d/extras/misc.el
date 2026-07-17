@@ -43,6 +43,17 @@
   ;; Interval between automatic session saves
   (easysession-save-interval (* 10 60))
   :init
+  ;; Name the session after the TMUX session (falling back to "main"),
+  ;; mirroring how the Emacs server is named in init.el, so each tmux
+  ;; session persists its own state. Runs at depth 101, before the load
+  ;; hook below (depth 102), so the correct session is loaded.
+  (add-hook 'emacs-startup-hook
+            (lambda ()
+              (easysession-set-current-session-name
+               (or (and (fboundp 'my/tmux-session-name)
+                        (my/tmux-session-name))
+                   "main")))
+            101)
   (add-hook 'emacs-startup-hook #'easysession-load-including-geometry 102)
   (add-hook 'emacs-startup-hook #'easysession-save-mode 103))
 
