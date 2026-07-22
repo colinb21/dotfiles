@@ -1,7 +1,7 @@
 -- Jump from the front browser tab to its Denote note in Emacs. Overloaded
--- on the tab's URL: a GitHub PR finds/creates its PR-review note, while a
--- JIRA ticket finds/creates the ticket note. Mirror of the Emacs-side
--- `C-c n o` (note → browser).
+-- on the tab's URL: a GitHub PR finds/creates its PR-review note (with or
+-- without an associated JIRA ticket), while a JIRA ticket finds/creates the
+-- ticket note. Mirror of the Emacs-side `C-c n o` (note → browser).
 local browser = require "browser"
 local emacs = require "emacs"
 

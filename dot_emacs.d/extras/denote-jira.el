@@ -34,6 +34,11 @@ Should be the review cycle's first state and appear in
 `my-denote-jira-status-keywords', so status bumps replace it
 cleanly.")
 
+(defvar my-denote-jira-nojira-keyword "nojira"
+  "Keyword tagging a PR-review note created without a Jira issue.
+Applied by `my-denote-jira-new-pr-review' so these notes can be
+told apart from ticket-backed ones in searches and dblocks.")
+
 (defvar my-denote-jira-key-regexp "[A-Z][A-Z0-9]+-[0-9]+"
   "Regexp matching a Jira issue key such as NOS-10358 or DEVX-1667.")
 
@@ -448,6 +453,30 @@ Notes sharing a priority keep Denote's default order.  A non-nil
   (when (and (stringp url) (string-match "/pull/\\([0-9]+\\)" url))
     (match-string 1 url)))
 
+(defun my-denote-jira--pr-repo (url)
+  "Return \"owner/repo\" for GitHub PR URL, or nil."
+  (when (and (stringp url)
+            (string-match "github\\.com/\\([^/]+\\)/\\([^/]+\\)/pull/[0-9]+" url))
+    (format "%s/%s" (match-string 1 url) (match-string 2 url))))
+
+(defun my-denote-jira--pr-repo-slug (url)
+  "Return the Denote title-sluggified \"owner/repo\" for GitHub PR URL.
+Return nil if URL is not a recognizable GitHub PR URL.  Used to
+identify PR-review notes that have no Jira issue, in place of a
+Jira key."
+  (when-let* ((repo (my-denote-jira--pr-repo url)))
+    (denote-sluggify-title repo)))
+
+(defun my-denote-jira--fetch-pr-title (url)
+  "Return the title of the GitHub PR at URL via `gh'.
+Signal a `user-error' if the lookup fails."
+  (with-temp-buffer
+    (let ((status (call-process "gh" nil t nil "pr" "view" url
+                                "--json" "title" "-q" ".title")))
+      (unless (zerop status)
+        (user-error "gh failed for %s: %s" url (string-trim (buffer-string))))
+      (string-trim (buffer-string)))))
+
 (defun my-denote-jira--pr-key (url)
   "Return the Jira key referenced by GitHub PR URL, or nil.
 Use `gh' to read the PR title and head branch name, and search them
@@ -688,31 +717,83 @@ both plus topic keywords."
 
 (global-set-key (kbd "C-c n g") #'my-denote-jira-new-review)
 
+(defun my-denote-jira--create-pr-only-note (title topic-keywords)
+  "Create a Denote PR-review note titled TITLE with no Jira issue.
+TOPIC-KEYWORDS are topic keyword(s); `my-denote-jira-nojira-keyword'
+and `my-denote-jira-review-status-keyword' are appended automatically.
+Leaves point in the new note, just past a \"# PR:\" placeholder."
+  (denote title (append topic-keywords
+                        (list my-denote-jira-nojira-keyword
+                              my-denote-jira-review-status-keyword)))
+  (goto-char (point-max))
+  (insert "# PR: \n\n" "# Attachment: \n"))
+
+(defun my-denote-jira-new-pr-review (pr-url keywords)
+  "Create a PR-review Denote note for GitHub PR-URL with no Jira issue.
+Like `my-denote-jira-new-review', but for a pull request that has no
+associated Jira ticket: the title is \"OWNER/REPO#N: PR-title\", where
+the PR title is fetched via `gh' instead of a Jira summary, and no
+Jira priority or issue link is added.  The note is tagged with
+`my-denote-jira-nojira-keyword'.  KEYWORDS are topic keyword(s).
+
+Interactively, default PR-URL to a URL on the clipboard and prompt
+for topic keywords."
+  (interactive
+   (let* ((clip (my-denote-jira--clipboard))
+          (default-url (and (my-denote-jira--url-p clip) clip))
+          (pr-url (string-trim
+                   (read-string (format-prompt "PR URL" default-url)
+                                nil nil default-url))))
+     (list pr-url (denote-keywords-prompt "Topic keyword(s)"))))
+  (when (string-empty-p pr-url) (user-error "No PR URL given"))
+  (let* ((pr-number (or (my-denote-jira--pr-number pr-url)
+                        (user-error "Not a GitHub PR URL: %s" pr-url)))
+         (repo (or (my-denote-jira--pr-repo pr-url) "unknown/unknown"))
+         (pr-title (my-denote-jira--fetch-pr-title pr-url))
+         (title (format "%s#%s: %s" repo pr-number pr-title)))
+    (my-denote-jira--create-pr-only-note title keywords)
+    (my-denote-jira-insert-pr pr-url (my-denote-jira--pr-description pr-url))))
+
+(global-set-key (kbd "C-c n G") #'my-denote-jira-new-pr-review)
+
 (defun my-denote-jira-visit-or-create-review-from-pr (pr-url)
   "Visit or create the PR-review note for GitHub PR-URL.
 Derive the Jira KEY from the PR via `gh', search for an existing
 review note whose slug carries both the key and a \"pr-N\"
 discriminator, and visit it; otherwise create one with
-`my-denote-jira-new-review'.  Intended for invocation via emacsclient
-from a Hammerspoon hotkey while viewing the PR in a browser."
-  (let ((pr-number (my-denote-jira--pr-number pr-url))
-        (key (my-denote-jira--pr-key pr-url)))
+`my-denote-jira-new-review'.
+
+When PR-URL has no associated Jira key (e.g. the PR was raised
+without a ticket), search instead by the PR's repo and number via
+`my-denote-jira--pr-repo-slug', and create a note with
+`my-denote-jira-new-pr-review' if none exists.
+
+Intended for invocation via emacsclient from a Hammerspoon hotkey
+while viewing the PR in a browser."
+  (let* ((pr-number (my-denote-jira--pr-number pr-url))
+         (key (my-denote-jira--pr-key pr-url))
+         (repo-slug (unless key (my-denote-jira--pr-repo-slug pr-url))))
     (unless pr-number
       (user-error "Not a GitHub PR URL: %s" pr-url))
-    (let ((files (and key
-                      (denote-directory-files
-                       (format "--%s.*pr-%s\\([^0-9]\\|$\\)"
-                               (downcase (regexp-quote key)) pr-number)))))
+    (let ((files (cond
+                  (key (denote-directory-files
+                        (format "--%s.*pr-%s\\([^0-9]\\|$\\)"
+                                (downcase (regexp-quote key)) pr-number)))
+                  (repo-slug (denote-directory-files
+                              (format "--%s%s\\([^0-9]\\|$\\)"
+                                      (regexp-quote repo-slug) pr-number))))))
       (cond
        ((and files (= (length files) 1))
         (find-file (car files)))
        (files
         (find-file (completing-read "Choose note: " files nil :require-match)))
-       (t
+       (key
         (my-denote-jira-new-review
-         (my-denote-jira--normalize-key (or key (read-string "Jira key: ")))
+         (my-denote-jira--normalize-key key)
          pr-url
-         (denote-keywords-prompt "Topic keyword(s)"))))
+         (denote-keywords-prompt "Topic keyword(s)")))
+       (t
+        (my-denote-jira-new-pr-review pr-url (denote-keywords-prompt "Topic keyword(s)"))))
       ;; Raise the frame when called from emacsclient.
       (when (display-graphic-p)
         (select-frame-set-input-focus (selected-frame))))))
