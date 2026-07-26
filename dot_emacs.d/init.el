@@ -30,7 +30,7 @@
   ;; add project and flymake to the pseudo-packages variable so
   ;; straight.el doesn't download a separate version than what eglot
   ;; downloads.
-  (straight-built-in-pseudo-packages '(emacs nadvice python image-mode project flymake))
+  (straight-built-in-pseudo-packages '(emacs nadvice python image-mode project flymake xref))
   (straight-use-package-by-default t)
   )
 
@@ -186,15 +186,15 @@
  ;; If there is more than one, they won't work right.
  )
 
-;; (use-package eglot
-;;   :bind (("C-c e c" . eglot-reconnect)
-;;          ("C-c e d" . flymake-show-buffer-diagnostics)
-;;          ("C-c e f f" . eglot-format)
-;;          ("C-c e f b" . eglot-format-buffer)
-;;          ("C-c e l" . eglot)
-;;          ("C-c e r n" . eglot-rename)
-;;          ("C-c e s" . eglot-shutdown)))
+(use-package eglot
+  :bind (("C-c e c" . eglot-reconnect)
+         ("C-c e d" . flymake-show-buffer-diagnostics)
+         ("C-c e f f" . eglot-format)
+         ("C-c e f b" . eglot-format-buffer)
+         ("C-c e l" . eglot)
+         ("C-c e r n" . eglot-rename)
 
+         ("C-c e s" . eglot-shutdown)))
 ;; (use-package python
 ;;   :config
 ;;   (setq python-check-command "ruff")
@@ -250,3 +250,10 @@
 (add-hook 'after-save-hook
           #'executable-make-buffer-file-executable-if-script-p)
 
+(with-eval-after-load 'eglot
+  (add-to-list 'eglot-server-programs
+               '(text-mode . ("harper-ls" "--stdio"))))
+
+(with-eval-after-load 'eglot
+      (add-to-list 'eglot-server-programs
+                   '(org-mode . ("harper-ls" "--stdio"))))
