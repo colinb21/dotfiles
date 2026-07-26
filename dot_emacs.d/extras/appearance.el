@@ -115,6 +115,15 @@
   :init
     :bind (("C-x C-b" . ibuffer)))
 
+;; use gls rather than ls on MacOS. Hid permissions, dates etc (reveal
+;; them with '('.
+(when (eq system-type 'darwin)
+    (let ((gls (executable-find "gls")))
+      (when gls
+        (setq dired-use-ls-dired t
+              insert-directory-program gls
+              dired-listing-switches "-aBhl  --group-directories-first"))))
+
 (setq ibuffer-saved-filter-groups
 	  (quote (("default"
 		   ("dired" (mode . dired-mode))

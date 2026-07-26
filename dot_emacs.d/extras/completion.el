@@ -113,5 +113,5 @@ Useful for prompts such as `eval-expression' and `shell-command'."
 
 ;; built-in to emacs 30. Consider using them when upgrading.
 ;; see also https://jtamagnan.com/posts/%C3%A0-la-mode-corfu-cape-and-completion-preview/
-;; (use-package completion-preview)
-;; (global-completion-preview-mode 1)
+(use-package completion-preview)
+(global-completion-preview-mode 1)

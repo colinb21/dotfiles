@@ -31,12 +31,6 @@
     (setq-default save-place t)
     (setq save-place-limit nil)))
 
-;; psession restores sessions, including dired from the last time we
-;; ran emacs. But on MacOS ls support --dired so a warning will appear
-;; unless I tell dired not to look for the Linux option
-(when (string= system-type "darwin")
-  (setq dired-use-ls-dired nil))
-
 (use-package easysession
   :ensure t
   :custom
