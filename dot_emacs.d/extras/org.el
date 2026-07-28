@@ -109,7 +109,7 @@ Does nothing if `visual-line-mode' is on."
 (use-package olivetti
   :config
   (add-hook 'org-mode-hook 'olivetti-mode)
-  (olivetti-body-width 0.8))
+  (setq olivetti-body-width 0.8))
 
 ;; by itself C-c c creates a new capture buffer. Prefixed with C-u it
 ;; takes you to the set of all such capture buffers.
