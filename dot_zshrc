@@ -160,5 +160,10 @@ nvm() {
 
 source $HOME/.aliases.zsh
 
+# run Claude without prompt suggestions. Handy when using the /socratic skill
+claude-quiet() {
+    env CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false command claude "$@"
+}
+
 #zprof
 
