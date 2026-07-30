@@ -73,10 +73,11 @@
 
   (defun contrib/corfu-enable-always-in-minibuffer ()
     "Enable Corfu in the minibuffer if Vertico is not active.
-Useful for prompts such as `eval-expression' and `shell-command'."
+  Useful for prompts such as `eval-expression' and `shell-command'."
     (unless (bound-and-true-p vertico--input)
+      (setq-local corfu-auto nil)   ; <-- add this line
       (corfu-mode 1)))
-
+  
   (add-hook 'minibuffer-setup-hook #'contrib/corfu-enable-always-in-minibuffer 1)
 
   (defun corfu-move-to-minibuffer ()
