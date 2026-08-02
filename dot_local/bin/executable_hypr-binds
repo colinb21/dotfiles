@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+# Searchable popup of the current Hyprland keybindings (bound to SUPER+/).
+# Reads live bindings from the compositor, so it stays correct as
+# hyprland.conf evolves. Descriptions come from bindd entries.
+
+hyprctl binds -j | jq -r '
+  def has($m; $b): ($m / $b | floor) % 2 == 1;
+  def modstr($m):
+    ((if has($m; 64) then ["SUPER"] else [] end) +
+     (if has($m; 4)  then ["CTRL"]  else [] end) +
+     (if has($m; 8)  then ["ALT"]   else [] end) +
+     (if has($m; 1)  then ["SHIFT"] else [] end)) | join("+");
+  .[]
+  | (modstr(.modmask) as $mm
+     | if $mm == "" then .key else $mm + "+" + .key end) as $keys
+  | (if .description != "" then .description
+     else (.dispatcher + " " + .arg) end) as $what
+  | [$keys, $what] | @tsv
+' | column -t -s "$(printf '\t')" \
+  | fuzzel --dmenu --width 70 --lines 20 --prompt 'binds> ' > /dev/null
