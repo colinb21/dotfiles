@@ -1,0 +1,41 @@
+{
+  "layer": "top",
+  "position": "top",
+  "height": 30,
+  "spacing": 4,
+
+  "modules-left":   ["hyprland/workspaces", "hyprland/window"],
+  "modules-center": ["clock"],
+  "modules-right":  ["network", "pulseaudio", "cpu", "memory", "tray"],
+
+  "hyprland/workspaces": {
+    "format": "{name}"
+  },
+
+  "hyprland/window": {
+    "max-length": 60
+  },
+
+  "clock": {
+    "format": "{:%a %d %b  %H:%M}",
+    "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
+  },
+
+  "network": {
+    "format-wifi": " {essid} ({signalStrength}%)",
+    "format-ethernet": " {ifname}",
+    "format-disconnected": "⚠ disconnected",
+    "tooltip-format": "{ipaddr}"
+  },
+
+  "pulseaudio": {
+    "format": "{volume}% {icon}",
+    "format-muted": "muted",
+    "format-icons": { "default": ["", "", ""] },
+    "on-click": "pamixer -t"
+  },
+
+  "cpu": { "format": "cpu {usage}%" },
+  "memory": { "format": "mem {}%" },
+  "tray": { "spacing": 8 }
+}
