@@ -126,13 +126,13 @@ source $HOME/.local/bin/fzf-git.sh
 
 if [ -f $HOME/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
     source $HOME/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
-else
+elif command -v brew &>/dev/null; then
     source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 fi
 
 if [ -f $HOME/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
     source $HOME/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-else
+elif command -v brew &>/dev/null; then
     source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 fi
 
