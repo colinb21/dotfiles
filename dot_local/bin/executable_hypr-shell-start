@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+# Started from hyprland.conf exec-once. Launches the shell layer chosen
+# at the greeter: the session wrapper (nix, modules/desktop.nix) writes
+# ~/.local/state/hypr-shell before starting Hyprland. Defaults to the
+# classic stack if the state file is missing (e.g. non-nixbox machines).
+shell=$(cat "$HOME/.local/state/hypr-shell" 2>/dev/null || echo classic)
+
+case "$shell" in
+  noctalia)
+    # Noctalia replaces waybar+mako+hyprpaper (and mako MUST not run:
+    # it would take the DBus notification name noctalia needs).
+    # Launch as a uwsm-managed unit: survives the exec-once startup
+    # race (a bare fork once wedged before rendering) and logs to the
+    # journal (journalctl --user -u app-noctalia-shell*).
+    if command -v uwsm >/dev/null 2>&1; then
+      uwsm app -- noctalia-shell &
+    else
+      noctalia-shell &
+    fi
+    ;;
+  *)
+    waybar &
+    mako &
+    hyprpaper &
+    ;;
+esac
