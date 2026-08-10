@@ -1,0 +1,32 @@
+/* Catppuccin Mocha */
+* {
+  background-image: none;
+  font-family: "JetBrainsMono Nerd Font", "Inter", sans-serif;
+  font-size: 14px;
+}
+
+window {
+  background-color: rgba(30, 30, 46, 0.88);
+}
+
+button {
+  background-color: #313244;
+  border: 2px solid #45475a;
+  border-radius: 12px;
+  color: #cdd6f4;
+  margin: 16px;
+  padding: 20px;
+  font-size: 15px;
+  font-weight: bold;
+  transition: all 0.2s ease;
+}
+
+button:hover, button:focus {
+  background-color: #89b4fa;
+  border-color: #89b4fa;
+  color: #1e1e2e;
+  outline: none;
+}
+
+/* Per-button accent colours on hover would need individual selectors;
+   a single blue hover is clean enough. */
