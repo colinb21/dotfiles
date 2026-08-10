@@ -5,6 +5,14 @@
 # classic stack if the state file is missing (e.g. non-nixbox machines).
 shell=$(cat "$HOME/.local/state/hypr-shell" 2>/dev/null || echo classic)
 
+# On nixbox, create a permanent headless output for Sunshine to capture.
+# Sunshine locks to the output it sees at startup; keeping "stream" always
+# present means it captures the headless display rather than the physical one.
+# prep-cmd in each Sunshine app changes the resolution without recreating it.
+if [ "$(hostname)" = "nixbox" ]; then
+  hyprctl output create headless stream
+fi
+
 case "$shell" in
   noctalia)
     # Noctalia replaces waybar+mako+hyprpaper (and mako MUST not run:
