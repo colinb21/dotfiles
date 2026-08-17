@@ -1,0 +1,12 @@
+#!/bin/sh
+# sunshine-undo
+# Called by Sunshine as a prep-cmd Undo when a stream session ends.
+# Moves Steam back to DP-1, resets the headless output to 1080p standby,
+# and restarts hypridle so the screen will lock again on idle.
+
+hyprctl dispatch focuswindow class:steam && \
+  hyprctl dispatch movewindow mon:DP-1 || true
+hyprctl dispatch focusmonitor DP-1 || true
+hyprctl keyword monitor stream,1920x1080@60,auto,1 || true
+
+systemctl --user start hypridle || true

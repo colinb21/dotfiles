@@ -1,0 +1,32 @@
+#!/bin/sh
+# sunshine-prep <resolution>
+# Called by Sunshine as a prep-cmd Do before a stream session starts.
+# $1 = monitor rule suffix, e.g. "1920x1080@60,auto,1"
+#
+# Unlocks hyprlock (if active), stops hypridle, sets the headless
+# stream output to the requested resolution, moves workspace 10 there,
+# then moves the Steam window (if running) to that workspace so the
+# client sees Steam immediately on connect.
+
+RES="$1"
+
+# Stop hypridle so the screen doesn't lock again mid-stream.
+# We deliberately do NOT try to auto-dismiss hyprlock here — if the screen
+# is locked when connecting, the user types their password in Moonlight.
+# Hyprlock then exits cleanly via PAM and the stream shows the workspace.
+# Killing or sending D-Bus signals to hyprlock causes it to exit without
+# releasing the Wayland session-lock protocol, triggering Hyprland's
+# "lockscreen app died" fallback screen instead.
+systemctl --user stop hypridle || true
+
+hyprctl keyword monitor "stream,$RES" || exit 1
+
+hyprctl dispatch moveworkspacetomonitor 10 stream || true
+
+# Move Steam to workspace 10 if it's already running; detached will
+# launch it fresh (opening on the focused workspace) if it isn't.
+hyprctl dispatch focuswindow class:steam && \
+  hyprctl dispatch movetoworkspacesilent 10 || true
+
+hyprctl dispatch focusmonitor stream || true
+hyprctl dispatch workspace 10 || true
