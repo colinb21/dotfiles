@@ -8,8 +8,6 @@ function bindKey(key, fn)
   hs.hotkey.bind(cac, key, fn)
 end
 
-require "org-capture-integration"
-
  -- Keybindings cheat-sheet for current application. Press to toggle.
 hs.loadSpoon("KSheet")
 bindKey('c', function() spoon.KSheet:toggle() end)
