@@ -10,7 +10,7 @@ end
 
  -- Keybindings cheat-sheet for current application. Press to toggle.
 hs.loadSpoon("KSheet")
-bindKey('c', function() spoon.KSheet:toggle() end)
+bindKey('/', function() spoon.KSheet:toggle() end)
 
 -- Rescue Windows
 -- Move any windows that are off-screen onto the main screen
@@ -64,6 +64,11 @@ local secureInputTimer = hs.timer.doEvery(5, function()
         hs.alert("⚠️ Secure Input is enabled — hs.grid keys won't work")
     end
 end)
+
+bindKey("c", function() hs.application.launchOrFocus("Google Chrome") end)
+bindKey("s", function() hs.application.launchOrFocus("Safari") end)
+bindKey("t", function() hs.application.launchOrFocus("Tidal") end)
+bindKey("i", function() hs.application.launchOrFocus("iTerm") end)
 
 require "fetch-page-helper"
 require "screen-grid-stuff"
