@@ -30,4 +30,4 @@ local function jumpToDenote()
     emacs.eval(elisp, function(e) hs.alert.show("Denote jump failed: " .. e) end)
 end
 
-hs.hotkey.bind({"cmd", "alt", "ctrl"}, "n", jumpToDenote)
+bindKey("n", jumpToDenote)

@@ -34,5 +34,5 @@ local function captureLinkWithSelection()
     fire(url, title, selection)
 end
 
-hs.hotkey.bind({"cmd", "alt", "ctrl"}, "j", captureLink)
-hs.hotkey.bind({"cmd", "alt", "ctrl"}, "k", captureLinkWithSelection)
+bindKey("j", captureLink)
+bindKey("k", captureLinkWithSelection)
