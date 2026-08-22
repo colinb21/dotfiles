@@ -73,7 +73,7 @@
 (use-package exec-path-from-shell
   ;;  :if (memq window-system '(mac ns x))
   :config
-  (setq exec-path-from-shell-variables '("PATH" "GOPATH" "PRIVATE_DISK" "DENOTE_DIR" "ORG_DIR" "MY_DENOTE_COLLEAGUES" "GPG_TTY"))
+  (setq exec-path-from-shell-variables '("PATH" "GOPATH" "PRIVATE_DISK" "DENOTE_DIR" "ORG_DIR" "MY_DENOTE_COLLEAGUES" "GPG_TTY" "PRIVATE_VOLUME"))
   (exec-path-from-shell-initialize))
 
 ;; this needs to run early.

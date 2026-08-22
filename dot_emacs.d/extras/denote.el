@@ -140,12 +140,12 @@ Names are defined in `my-denote-colleagues'."
 ;; denote stores stuff in the private disk. If it isn't mounted when
 ;; emacs starts, try to fix that.
 (let* ((private-disk (getenv "PRIVATE_DISK"))
-       (info-cmd (concat "hdiutil info | grep " private-disk ))
-       (already-mounted (shell-command info-cmd nil nil)))
+       (private-volume (getenv "PRIVATE_VOLUME"))
+       (mnt-cmd (concat "mount | grep " private-volume))
+       (already-mounted (shell-command mnt-cmd nil nil)))
   (if (= already-mounted 1)
-      (let ((attach-cmd (concat "hdiutil attach " private-disk)))
-	(shell-command attach-cmd nil nil))))
-
+      (let ((attach-cmd (concat "diskutil image attach " private-disk)))
+	    (shell-command attach-cmd nil nil))))
 
 (with-eval-after-load 'org-capture
   (add-to-list 'org-capture-templates
