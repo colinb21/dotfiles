@@ -69,6 +69,7 @@ bindKey("c", function() hs.application.launchOrFocus("Google Chrome") end)
 bindKey("s", function() hs.application.launchOrFocus("Safari") end)
 bindKey("t", function() hs.application.launchOrFocus("Tidal") end)
 bindKey("i", function() hs.application.launchOrFocus("iTerm") end)
+bindKey("e", function() hs.application.launchOrFocus("Emacs") end)
 
 require "fetch-page-helper"
 require "screen-grid-stuff"
