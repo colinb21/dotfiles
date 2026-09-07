@@ -10,7 +10,7 @@ shell=$(cat "$HOME/.local/state/hypr-shell" 2>/dev/null || echo classic)
 # present means it captures the headless display rather than the physical one.
 # prep-cmd in each Sunshine app changes the resolution without recreating it.
 if [ "$(hostname)" = "nixbox" ]; then
-  hyprctl output create headless stream
+  hyprctl output create headless HEADLESS-1
 fi
 
 case "$shell" in

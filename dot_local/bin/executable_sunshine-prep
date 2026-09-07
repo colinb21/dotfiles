@@ -3,30 +3,38 @@
 # Called by Sunshine as a prep-cmd Do before a stream session starts.
 # $1 = monitor rule suffix, e.g. "1920x1080@60,auto,1"
 #
-# Unlocks hyprlock (if active), stops hypridle, sets the headless
-# stream output to the requested resolution, moves workspace 10 there,
-# then moves the Steam window (if running) to that workspace so the
-# client sees Steam immediately on connect.
+# Sets the HEADLESS-1 output to the requested resolution, routes the
+# stream workspace/tag to it, and moves Steam there if it's running.
+# Compositor-aware: uses hyprctl under Hyprland, wlr-randr+mmsg under Mango.
 
 RES="$1"
 
-# Stop hypridle so the screen doesn't lock again mid-stream.
-# We deliberately do NOT try to auto-dismiss hyprlock here — if the screen
-# is locked when connecting, the user types their password in Moonlight.
-# Hyprlock then exits cleanly via PAM and the stream shows the workspace.
-# Killing or sending D-Bus signals to hyprlock causes it to exit without
-# releasing the Wayland session-lock protocol, triggering Hyprland's
-# "lockscreen app died" fallback screen instead.
-systemctl --user stop hypridle || true
+if [ -n "$HYPRLAND_INSTANCE_SIGNATURE" ]; then
+    # ── Hyprland ───────────────────────────────────────────────────────────
+    # Stop hypridle so the screen doesn't lock again mid-stream.
+    # We deliberately do NOT try to auto-dismiss hyprlock here — if the screen
+    # is locked when connecting, the user types their password in Moonlight.
+    # Hyprlock then exits cleanly via PAM and the stream shows the workspace.
+    # Killing or sending D-Bus signals to hyprlock causes it to exit without
+    # releasing the Wayland session-lock protocol, triggering Hyprland's
+    # "lockscreen app died" fallback screen instead.
+    systemctl --user stop hypridle || true
 
-hyprctl keyword monitor "stream,$RES" || exit 1
+    hyprctl keyword monitor "HEADLESS-1,$RES" || exit 1
+    hyprctl dispatch moveworkspacetomonitor 10 HEADLESS-1 || true
 
-hyprctl dispatch moveworkspacetomonitor 10 stream || true
+    # Move Steam to workspace 10 if it's already running; detached will
+    # launch it fresh (opening on the focused workspace) if it isn't.
+    hyprctl dispatch focuswindow class:steam && \
+      hyprctl dispatch movetoworkspacesilent 10 || true
 
-# Move Steam to workspace 10 if it's already running; detached will
-# launch it fresh (opening on the focused workspace) if it isn't.
-hyprctl dispatch focuswindow class:steam && \
-  hyprctl dispatch movetoworkspacesilent 10 || true
-
-hyprctl dispatch focusmonitor stream || true
-hyprctl dispatch workspace 10 || true
+    hyprctl dispatch focusmonitor HEADLESS-1 || true
+    hyprctl dispatch workspace 10 || true
+else
+    # ── MangoWM ────────────────────────────────────────────────────────────
+    # HEADLESS-1 is pre-created at session startup (mango exec-once); just
+    # resize it to the resolution the Moonlight client requested.
+    MODE="${RES%%,*}Hz"   # "1920x1080@60,auto,1" → "1920x1080@60Hz"
+    wlr-randr --output HEADLESS-1 --custom-mode "$MODE" || exit 1
+    mmsg dispatch focusmon,HEADLESS-1
+fi
