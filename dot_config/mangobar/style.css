@@ -1,0 +1,84 @@
+* {
+    font-family: "JetBrainsMono Nerd Font";
+    font-size: 13px;
+    font-weight: bold;
+    color: #f3edf7;
+    background-color: #11112d;
+    padding: 0px 10px;
+    margin: 4px 2px;
+    border-radius: 8px;
+}
+
+#bar {
+    background: none;
+    margin: 4px 8px;
+}
+
+#tags {
+    padding: 0px 12px;
+}
+#tags.active {
+    background-color: #a9aefe;
+    color: #0e0e43;
+}
+#tags.occupied {
+    background-color: #21215f;
+    color: #f3edf7;
+}
+#tags.urgent {
+    background-color: #fd4663;
+    color: #0e0e43;
+}
+#tags.empty {
+    background-color: #070722;
+    color: #7c80b4;
+}
+
+#layout {
+    background-color: #9bfece;
+    color: #0e0e43;
+    min-width: 32px;
+}
+
+#title {
+    background-color: #21215f;
+    color: #f3edf7;
+}
+
+#clock {
+    background-color: #a9aefe;
+    color: #0e0e43;
+}
+#clock.date {
+    background-color: #21215f;
+    color: #f3edf7;
+}
+
+#cpu {
+    background-color: #21215f;
+    color: #f3edf7;
+}
+#mem {
+    background-color: #21215f;
+    color: #f3edf7;
+}
+#volume {
+    background-color: #21215f;
+    color: #f3edf7;
+}
+#network {
+    background-color: #21215f;
+    color: #f3edf7;
+}
+
+#tray {
+    background-color: #11112d;
+    padding: 0px 12px;
+}
+
+#custom-power {
+    background-color: #fd4663;
+    color: #0e0e43;
+    padding: 0px 14px;
+    margin: 4px 4px;
+}
