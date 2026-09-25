@@ -12,4 +12,4 @@ alias timezsh='for i in $(seq 1 10); do time zsh -i -c exit; done'
 
 alias ec=/Applications/Emacs.app/Contents/MacOS/bin/emacsclient
 
-alias socrates='CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false claude'.
+alias socrates='CLAUDE_CODE_ENABLE_PROMPT_SUGGESTION=false claude'
