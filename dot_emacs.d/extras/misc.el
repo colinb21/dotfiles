@@ -33,6 +33,8 @@
 
 (use-package easysession
   :ensure t
+  :delight
+  :diminish ES
   :custom
   ;; Interval between automatic session saves
   (easysession-save-interval (* 10 60))
