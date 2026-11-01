@@ -28,7 +28,9 @@
         (if (not (= 0 (shell-command "chezmoi git push")))
             (user-error "Error pushing changes")))))
 
-(add-hook 'after-save-hook #'chezmoi-git-sync)
+
+;; don't auto sync to github.
+;;(add-hook 'after-save-hook #'chezmoi-git-sync)
 
 (defun chezmoi-add-file()
   (interactive)
