@@ -1,12 +1,21 @@
 #!/bin/sh
 # sunshine-undo
 # Called by Sunshine as a prep-cmd Undo when a stream session ends.
-# Moves Steam back to DP-1, resets the headless output to 1080p standby,
-# and restarts hypridle so the screen will lock again on idle.
+# Resets the HEADLESS-1 output to 1080p standby and restores local focus.
+# Compositor-aware: uses hyprctl under Hyprland, wlr-randr+mmsg under Mango.
 
-hyprctl dispatch focuswindow class:steam && \
-  hyprctl dispatch movewindow mon:DP-1 || true
-hyprctl dispatch focusmonitor DP-1 || true
-hyprctl keyword monitor stream,1920x1080@60,auto,1 || true
-
-systemctl --user start hypridle || true
+if [ -n "$HYPRLAND_INSTANCE_SIGNATURE" ]; then
+    # ── Hyprland ───────────────────────────────────────────────────────────
+    hyprctl dispatch focuswindow class:steam && \
+      hyprctl dispatch movewindow mon:DP-1 || true
+    hyprctl dispatch focusmonitor DP-1 || true
+    hyprctl keyword monitor HEADLESS-1,1920x1080@60,auto,1 || true
+    systemctl --user start hypridle || true
+else
+    # ── MangoWM ────────────────────────────────────────────────────────────
+    # Return focus to the physical display and reset HEADLESS-1 to standby.
+    # Don't destroy the output — Sunshine locked to it at startup and won't
+    # re-detect it if it's recreated.
+    mmsg dispatch focusmon,DP-1
+    wlr-randr --output HEADLESS-1 --custom-mode 1920x1080@60Hz
+fi

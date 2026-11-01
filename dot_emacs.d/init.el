@@ -162,8 +162,8 @@
 ;;(load-file (expand-file-name "extras/lsp.el" user-emacs-directory))
 (load-file (expand-file-name "extras/treesit.el" user-emacs-directory))
 (load-file (expand-file-name "extras/rust.el" user-emacs-directory))
-(when (eq system-type 'darwin)
-  (load-file (expand-file-name "extras/nano.el" user-emacs-directory)))
+;;(when (eq system-type 'darwin)
+;;  (load-file (expand-file-name "extras/nano.el" user-emacs-directory)))
 ;;(load-file (expand-file-name "extras/gptel.el" user-emacs-directory))
 (load-file (expand-file-name "extras/casual.el" user-emacs-directory))
 (load-file (expand-file-name "extras/embark.el" user-emacs-directory))
@@ -223,7 +223,15 @@
   :config
   (setq jira-base-url "https://nexthopai.atlassian.net")
   (setq jira-token-is-personal-access-token nil)
-  (setq jira-api-version 3))
+  (setq jira-api-version 3)
+  (setq jira-issues-max-results 100)
+  (setq jira-issues-default-type "Bug")   ; drop this line to see all issue types
+
+  (defun my/jira-issues-default-value ()
+    (list "--myself"
+          "--jql=statusCategory != Done"))
+  (advice-add 'jira-issues--transient-default-value
+              :override #'my/jira-issues-default-value))
 
 ;; Emacs normally fontifies (syntax-highlights) text even while you’re
 ;; actively typing. This can cause micro-stutters, especially in

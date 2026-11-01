@@ -193,3 +193,38 @@ Does nothing if `visual-line-mode' is on."
                                                           :with-title nil))))
     (kill-new md)
     (message "Markdown copied (%d chars)" (length md))))
+
+(defun my/box-table-to-org (beg end)
+  "Convert a Unicode box-drawing table in region BEG..END into an org-mode table.
+Handles tables using ┌ ┬ ┐ ┼ ├ ┤ └ ┴ ┘ │ ─ characters, as commonly
+pretty-printed by terminals from markdown tables (e.g. Claude Code output)."
+  (interactive "r")
+  (let* ((text (buffer-substring-no-properties beg end))
+         (lines (split-string text "\n"))
+         (result
+          (delete
+           nil
+           (mapcar
+            (lambda (line)
+              (cond
+               ;; Top or bottom border line: only border-drawing chars/whitespace
+               ;; and no interior "cross" needed — drop entirely.
+               ((string-match-p "\\`[[:space:]]*[┌└][─┬┴┐┘]*[[:space:]]*\\'" line)
+                nil)
+               ;; Separator line (has ├ or ┼ or ┤ made of ─): becomes a bare rule.
+               ((string-match-p "[├┼┤]" line)
+                "|-")
+               ;; Content line: convert │ to | and trim.
+               ((string-match-p "│" line)
+                (string-trim (replace-regexp-in-string "│" "|" line)))
+               ;; Anything else (blank lines etc.) pass through unchanged.
+               (t (if (string-blank-p line) nil line))))
+            lines))))
+    (delete-region beg end)
+    (goto-char beg)
+    (insert (mapconcat #'identity result "\n") "\n")
+    (when (derived-mode-p 'org-mode)
+      (save-excursion
+        (goto-char beg)
+        (when (re-search-forward "|" end t)
+          (org-table-align))))))

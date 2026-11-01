@@ -1,0 +1,69 @@
+// mangobar config — nixbox
+{
+    "layer": "top",
+    "height": 34,
+    "buffer-scale": 1,
+
+    "modules-left": [
+        "workspaces",
+        "layout",
+        "window"
+    ],
+    "modules-center": [
+        "clock#time"
+    ],
+    "modules-right": [
+        "tray",
+        "network",
+        "cpu",
+        "memory",
+        "pulseaudio",
+        "clock#date",
+        "custom/power"
+    ],
+
+    "workspaces": {
+        "hide-empty": true,
+        "on-click": "activate"
+    },
+    "layout": {
+        "format": "{}"
+    },
+    "window": {
+        "format": "{}"
+    },
+
+    "network": {
+        "format": "󰈀 {ifname}",
+        "format-alt": "↓{down} ↑{up}"
+    },
+    "cpu": {
+        "format": " {load}%"
+    },
+    "memory": {
+        "format": " {}%"
+    },
+    "pulseaudio": {
+        "format": "{icon} {volume}%",
+        "format-muted": "󰝟 muted",
+        "icons": ["󰝟", "󰕿", "󰕾"],
+        "on-click": "pamixer -t",
+        "on-scroll-up": "pamixer -i 2",
+        "on-scroll-down": "pamixer -d 2",
+        "on-click-right": "pavucontrol"
+    },
+    "clock#date": {
+        "format": " {:L%a %b %d}"
+    },
+    "clock#time": {
+        "format": " {:L%H:%M}"
+    },
+    "tray": {
+        "icon-size": 18,
+        "spacing": 8
+    },
+    "custom/power": {
+        "format": "󰐥",
+        "on-click": "wlogout"
+    }
+}

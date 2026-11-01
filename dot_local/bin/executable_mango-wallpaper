@@ -1,0 +1,14 @@
+#!/bin/sh
+# Start awww daemon and set a random wallpaper from ~/Pictures/Wallpapers.
+# Called by MangoWM exec-once on session start.
+DIR="$HOME/Pictures/Wallpapers"
+
+awww-daemon &
+sleep 1
+
+pick() {
+    ls "$DIR"/*.{jpg,jpeg,png,webp} 2>/dev/null | shuf -n1
+}
+
+img=$(pick)
+[ -n "$img" ] && awww img "$img" --transition-type fade --transition-duration 1
