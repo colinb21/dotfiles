@@ -167,6 +167,38 @@ INDENT is a leading-whitespace prefix for nested content."
   "Convert ADF DOC alist to a trimmed Org-formatted string."
   (string-trim (my-denote-jira--adf-blocks (alist-get 'content doc))))
 
+(defvar my-denote-jira-max-summary-length 80
+  "Maximum length of the summary part of a generated note title.
+Longer Jira summaries (or PR titles) are cut at a word boundary and
+end with \"...\", so the Denote file name stays well under the
+255-byte file-name limit even after status keywords are added on
+rename.  The full text goes in a `#+summary:' front-matter line.")
+
+(defun my-denote-jira--truncate-summary (s)
+  "Return S shortened to `my-denote-jira-max-summary-length' characters.
+Cut at the last word boundary, drop trailing punctuation and spaces,
+and append \"...\" (which Denote drops from the slug).
+Return S unchanged if it already fits."
+  (if (<= (length s) my-denote-jira-max-summary-length)
+      s
+    (let* ((cut (substring s 0 my-denote-jira-max-summary-length))
+           (cut (if (string-match "\\`\\(.*[^[:space:]]\\)[[:space:]]" cut)
+                    (match-string 1 cut)
+                  cut)))
+      (concat (replace-regexp-in-string "[[:space:][:punct:]]+\\'" "" cut)
+              "..."))))
+
+(defun my-denote-jira--insert-full-summary (full shown)
+  "Insert a `#+summary:' front-matter line with FULL if it differs from SHOWN.
+Use this after `denote' creates a note whose title was shortened with
+`my-denote-jira--truncate-summary'.  Point ends at the end of the buffer."
+  (unless (equal full shown)
+    (goto-char (point-min))
+    (when (re-search-forward "^#\\+identifier:.*\n" nil t)
+      (insert (format "#+summary:    %s\n"
+                      (replace-regexp-in-string "[\n\r]+" " " full)))))
+  (goto-char (point-max)))
+
 (defun my-denote-jira--create-note (key topic-keywords status &optional with-description title-suffix)
   "Create a Denote note for Jira issue KEY in the given STATUS.
 TOPIC-KEYWORDS are topic keyword(s); the Jira priority (downcased)
@@ -185,9 +217,10 @@ heading.  Leaves point in the new note."
          (priority (alist-get 'name (alist-get 'priority fields))))
     (unless (and summary (stringp summary))
       (user-error "No summary found for %s" key))
-    (let* ((title (if title-suffix
-                      (format "%s: %s %s" key summary title-suffix)
-                    (format "%s: %s" key summary)))
+    (let* ((short (my-denote-jira--truncate-summary summary))
+           (title (if title-suffix
+                      (format "%s: %s %s" key short title-suffix)
+                    (format "%s: %s" key short)))
            (all-keywords (append topic-keywords
                                  (and (stringp priority)
                                       (list (downcase priority)))
@@ -198,7 +231,7 @@ heading.  Leaves point in the new note."
                           (unless (string-empty-p org) org))))
       (denote title all-keywords)
       ;; `denote' leaves us in the new note, just past the front matter.
-      (goto-char (point-max))
+      (my-denote-jira--insert-full-summary summary short)
       (insert (format "\n[[%s/browse/%s][JIRA: %s]]\n\n"
                       my-denote-jira-base-url key key)
               "# PR: \n\n"
@@ -717,15 +750,17 @@ both plus topic keywords."
 
 (global-set-key (kbd "C-c n g") #'my-denote-jira-new-review)
 
-(defun my-denote-jira--create-pr-only-note (title topic-keywords)
+(defun my-denote-jira--create-pr-only-note (title topic-keywords &optional full-summary shown-summary)
   "Create a Denote PR-review note titled TITLE with no Jira issue.
 TOPIC-KEYWORDS are topic keyword(s); `my-denote-jira-nojira-keyword'
 and `my-denote-jira-review-status-keyword' are appended automatically.
+If FULL-SUMMARY differs from SHOWN-SUMMARY (the shortened text used in
+TITLE), record FULL-SUMMARY in a `#+summary:' line.
 Leaves point in the new note, just past a \"# PR:\" placeholder."
   (denote title (append topic-keywords
                         (list my-denote-jira-nojira-keyword
                               my-denote-jira-review-status-keyword)))
-  (goto-char (point-max))
+  (my-denote-jira--insert-full-summary full-summary shown-summary)
   (insert "# PR: \n\n" "# Attachment: \n"))
 
 (defun my-denote-jira-new-pr-review (pr-url keywords)
@@ -750,8 +785,9 @@ for topic keywords."
                         (user-error "Not a GitHub PR URL: %s" pr-url)))
          (repo (or (my-denote-jira--pr-repo pr-url) "unknown/unknown"))
          (pr-title (my-denote-jira--fetch-pr-title pr-url))
-         (title (format "%s#%s: %s" repo pr-number pr-title)))
-    (my-denote-jira--create-pr-only-note title keywords)
+         (short (my-denote-jira--truncate-summary pr-title))
+         (title (format "%s#%s: %s" repo pr-number short)))
+    (my-denote-jira--create-pr-only-note title keywords pr-title short)
     (my-denote-jira-insert-pr pr-url (my-denote-jira--pr-description pr-url))))
 
 (global-set-key (kbd "C-c n G") #'my-denote-jira-new-pr-review)
